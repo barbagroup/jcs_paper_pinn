@@ -1,0 +1,78 @@
+%! TEX program = pdflatex
+\documentclass[5p, twocolumn, times, sort&compress]{elsarticle}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{lipsum}  % generate random text as place holders
+
+% bibliography style
+\bibliographystyle{elsarticle-num}
+
+% journal name
+\journal{Journal of Computational Science}
+
+\begin{document}
+
+    % front matter
+    \begin{frontmatter}
+        % title
+        \title{%
+            Predicting Fluid Dynamic Instabilities Using Physics-Informed Neural Networks%
+        }
+
+        % author list
+        \author[1]{Pi-Yueh Chuang}
+        \ead{pychuang@gwu.edu}
+        \author[1]{Lorena A. Barba\corref{cor1}}
+        \ead{labarba@gwu.edu}
+        \cortext[cor1]{Corresponding author}
+        \affiliation[1]{%
+            organization={%
+                Department of Mechanical and Aerospace Engineering, %
+                The George Washington Unibersity%
+            },%
+            city={Washington},%
+            state={DC 20052},%
+            country={USA}%
+        }
+
+        % abstract
+        \begin{abstract}
+            \lipsum[1]%
+        \end{abstract}
+
+        % keywords
+        \begin{keyword}
+            computational fluid dynamics \sep
+            physics-informed neural networks \sep
+            dynamic mode analysis \sep
+            koopman analysis \sep
+            vortex shedding
+        \end{keyword}
+    \end{frontmatter}
+
+    \section{Introduction}
+    \lipsum[2] And \cite{chen_variants_2012, rowley_spectral_2009, rahaman_spectral_2019}.
+
+    \section{Method}
+    \lipsum[3]
+
+    \section{Results}
+    \lipsum[4]
+
+    \section{Discussion}
+    \lipsum[5]
+
+    \section{Conclusion}
+    \lipsum[6]
+
+    \section*{Acknowledgement}
+    \lipsum[7]
+
+    % bibliography
+    \bibliography{references}
+
+\end{document}
+% vim:ft=tex:
