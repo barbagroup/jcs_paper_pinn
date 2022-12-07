@@ -1,0 +1,212 @@
+\begin{tikzpicture}
+	\begin{pgfonlayer}{nodelayer}
+		\node [style=input] (0) at (-22, 10) {};
+		\node [style=input] (1) at (-22, 8) {};
+		\node [style=input] (2) at (-22, 6) {};
+		\node [style=input] (3) at (-22, 4) {};
+		\node [style=input] (4) at (-22, 10) {$x$};
+		\node [style=input] (5) at (-22, 8) {$y$};
+		\node [style=input] (6) at (-22, 6) {$z$};
+		\node [style=input] (7) at (-22, 4) {$t$};
+		\node [style=param] (8) at (-20, 11) {$\theta_1^1$};
+		\node [style=param] (9) at (-20, 9) {$\theta_2^1$};
+		\node [style=param] (10) at (-20, 3) {$\theta_{N_1}^1$};
+		\node [style=none] (11) at (-20, 6) {$\vdots$};
+		\node [style=none] (13) at (-20, 5) {$\vdots$};
+		\node [style=none] (14) at (-20, 7) {$\vdots$};
+		\node [style=param] (15) at (-18, 11) {$\theta_1^2$};
+		\node [style=param] (16) at (-18, 9) {$\theta_2^2$};
+		\node [style=param] (17) at (-18, 3) {$\theta_{N_2}^2$};
+		\node [style=none] (18) at (-18, 6) {$\vdots$};
+		\node [style=none] (19) at (-18, 5) {$\vdots$};
+		\node [style=none] (20) at (-18, 7) {$\vdots$};
+		\node [style=input] (21) at (-16, 10) {};
+		\node [style=input] (22) at (-16, 8) {};
+		\node [style=input] (23) at (-16, 6) {};
+		\node [style=input] (24) at (-16, 4) {};
+		\node [style=input] (25) at (-16, 10) {$u$};
+		\node [style=input] (26) at (-16, 8) {$v$};
+		\node [style=input] (27) at (-16, 6) {$w$};
+		\node [style=input] (28) at (-16, 4) {$p$};
+		\node [style=text only] (31) at (-1.5, 11.75) {\relscale{0.5}$\left\{\begin{aligned}
+					&\mathbf{u}=\begin{bsmallmatrix}u&v&w\end{bsmallmatrix}^\mathsf{T}\text{; }\mathbf{x}=\begin{bsmallmatrix}x&y&z\end{bsmallmatrix}^\mathsf{T} \\
+					&\Theta=\left\{\theta_i^j: i\in 1..N_j, j=1, 2\right\}
+				\end{aligned}\right.$};
+		\node [style=none] (32) at (-23, 12.75) {};
+		\node [style=none] (33) at (-19, 12.75) {};
+		\node [style=none] (34) at (-15, 12.75) {};
+		\node [style=none] (36) at (-15, 2) {};
+		\node [style=none] (37) at (-19, 2) {};
+		\node [style=none] (38) at (-23, 2) {};
+		\node [style=none] (39) at (-23, 7) {};
+		\node [style=none] (40) at (-15, 7) {};
+		\node [style=derivative] (41) at (-12.75, 11.5) {$\frac{\partial u}{\partial t}$};
+		\node [style=derivative] (42) at (-11.25, 11.5) {$\frac{\partial u}{\partial x}$};
+		\node [style=derivative] (43) at (-9.75, 11.5) {$\frac{\partial u}{\partial y}$};
+		\node [style=derivative] (44) at (-8.25, 11.5) {$\frac{\partial u}{\partial z}$};
+		\node [style=derivative] (46) at (-12.75, 8.5) {$\frac{\partial v}{\partial t}$};
+		\node [style=derivative] (47) at (-11.25, 8.5) {$\frac{\partial v}{\partial x}$};
+		\node [style=derivative] (48) at (-9.75, 8.5) {$\frac{\partial v}{\partial y}$};
+		\node [style=derivative] (49) at (-8.25, 8.5) {$\frac{\partial v}{\partial z}$};
+		\node [style=derivative] (50) at (-12.75, 5.5) {$\frac{\partial w}{\partial t}$};
+		\node [style=derivative] (51) at (-11.25, 5.5) {$\frac{\partial w}{\partial x}$};
+		\node [style=derivative] (52) at (-9.75, 5.5) {$\frac{\partial w}{\partial y}$};
+		\node [style=derivative] (53) at (-8.25, 5.5) {$\frac{\partial w}{\partial z}$};
+		\node [style=derivative] (54) at (-12, 2.5) {$\frac{\partial p}{\partial x}$};
+		\node [style=derivative] (55) at (-10.5, 2.5) {$\frac{\partial p}{\partial y}$};
+		\node [style=derivative] (56) at (-9, 2.5) {$\frac{\partial p}{\partial z}$};
+		\node [style=derivative] (57) at (-12, 10.5) {$\frac{\partial^2 u}{\partial x^2}$};
+		\node [style=derivative] (58) at (-10.5, 10.5) {$\frac{\partial^2 u}{\partial y^2}$};
+		\node [style=derivative] (59) at (-9, 10.5) {$\frac{\partial^2 u}{\partial z^2}$};
+		\node [style=derivative] (60) at (-12, 7.5) {$\frac{\partial^2 v}{\partial x^2}$};
+		\node [style=derivative] (61) at (-10.5, 7.5) {$\frac{\partial^2 v}{\partial y^2}$};
+		\node [style=derivative] (62) at (-9, 7.5) {$\frac{\partial^2 v}{\partial z^2}$};
+		\node [style=derivative] (63) at (-12, 4.5) {$\frac{\partial^2 w}{\partial x^2}$};
+		\node [style=derivative] (64) at (-10.5, 4.5) {$\frac{\partial^2 w}{\partial y^2}$};
+		\node [style=derivative] (65) at (-9, 4.5) {$\frac{\partial^2 w}{\partial z^2}$};
+		\node [style=none] (66) at (-12.75, 3.25) {};
+		\node [style=none] (67) at (-7.25, 3.25) {};
+		\node [style=none] (68) at (-7.25, 1.75) {};
+		\node [style=none] (69) at (-12.75, 1.75) {};
+		\node [style=none] (70) at (-13.5, 6.25) {};
+		\node [style=none] (71) at (-7.25, 6.25) {};
+		\node [style=none] (72) at (-7.25, 3.75) {};
+		\node [style=none] (73) at (-13.5, 3.75) {};
+		\node [style=none] (74) at (-13.5, 9.25) {};
+		\node [style=none] (75) at (-7.25, 9.25) {};
+		\node [style=none] (76) at (-7.25, 6.75) {};
+		\node [style=none] (77) at (-13.5, 6.75) {};
+		\node [style=none] (78) at (-13.5, 12.25) {};
+		\node [style=none] (79) at (-7.25, 12.25) {};
+		\node [style=none] (80) at (-7.25, 9.75) {};
+		\node [style=none] (81) at (-13.5, 9.75) {};
+		\node [style=none] (82) at (-12.75, 2.5) {};
+		\node [style=none] (83) at (-7.25, 2.5) {};
+		\node [style=none] (84) at (-13.5, 5) {};
+		\node [style=none] (85) at (-7.25, 5) {};
+		\node [style=none] (86) at (-13.5, 8) {};
+		\node [style=none] (87) at (-7.25, 8) {};
+		\node [style=none] (88) at (-13.5, 11) {};
+		\node [style=none] (89) at (-7.25, 11) {};
+		\node [style=loss] (90) at (-1.5, 10.25) {$L_1 = \nabla \cdot \mathbf{u}$};
+		\node [style=loss] (91) at (-1.5, 8) {$\begin{bmatrix}L_2 \\ L_3 \\ L_4 \end{bmatrix}
+=
+\frac{\mathrm{D} \mathbf{u}}{\mathrm{D} t} +
+\frac{1}{\rho}\nabla p - \nu\nabla^2\mathbf{u}$};
+		\node [style=loss] (93) at (-1.5, 5.75) {$L_5 = \left.\mathbf{u}\right|_{\mathbf{x}\in\Gamma_D}-\mathbf{BC}_{\Gamma_D}$};
+		\node [style=loss] (94) at (-1.5, 4) {$L_6=\left(\nabla\mathbf{u}\cdot\mathbf{n}\right)_{\mathbf{x}\in\Gamma_N}-\mathbf{BC}_{\Gamma_N}$};
+		\node [style=loss] (95) at (-1.5, 2.25) {$L_7 = \left.\mathbf{u}\right|_{t=0} - \mathbf{IC}$};
+		\node [style=none] (97) at (-14, 12.75) {};
+		\node [style=none] (98) at (-6.75, 12.75) {};
+		\node [style=none] (99) at (-6.75, 1.25) {};
+		\node [style=none] (100) at (-14, 1.25) {};
+		\node [style=none] (101) at (-10.25, 12.75) {};
+		\node [style=none] (102) at (-14, 7.75) {};
+		\node [style=none] (103) at (-6.75, 7.75) {};
+		\node [style=none] (104) at (-10.25, 1.25) {};
+		\node [style=none] (105) at (-5.75, 12.75) {};
+		\node [style=none] (106) at (-5.75, 1.25) {};
+		\node [style=none] (107) at (-5.75, 7) {};
+		\node [style=none] (108) at (2.75, 12.75) {};
+		\node [style=none] (109) at (2.75, 1.25) {};
+		\node [style=none] (110) at (2.75, 7) {};
+		\node [style=none] (111) at (-0.75, 12.75) {};
+		\node [style=none] (112) at (-3, 1.25) {};
+		\node [style=text only] (113) at (-14.5, 14) {Automatic differentiation};
+		\node [style=text only] (114) at (-5.5, 14) {Multiple objectives};
+		\node [style=loss] (115) at (-10.25, -0.25) {$\argmin\limits_{\Theta} L(L_1, \cdots, L_7)$};
+		\node [style=text only] (116) at (-1.25, -0.25) {Nonlinear optimization};
+		\node [style=text only] (117) at (-19.5, 12.25) {$u, v, w, p = f(x, y, z, t; \Theta)$};
+	\end{pgfonlayer}
+	\begin{pgfonlayer}{edgelayer}
+		\draw [style=one arrow] (4) to (8);
+		\draw [style=one arrow] (4) to (9);
+		\draw [style=one arrow] (4) to (10);
+		\draw [style=one arrow] (5) to (8);
+		\draw [style=one arrow] (5) to (9);
+		\draw [style=one arrow] (5) to (10);
+		\draw [style=one arrow] (6) to (8);
+		\draw [style=one arrow] (6) to (9);
+		\draw [style=one arrow] (6) to (10);
+		\draw [style=one arrow] (7) to (8);
+		\draw [style=one arrow] (7) to (9);
+		\draw [style=one arrow] (7) to (10);
+		\draw [in=180, out=0] (8) to (15);
+		\draw [style=one arrow] (8) to (16);
+		\draw [style=one arrow] (8) to (17);
+		\draw [style=one arrow] (9) to (15);
+		\draw [style=one arrow] (9) to (16);
+		\draw [style=one arrow] (9) to (17);
+		\draw [style=one arrow] (10) to (15);
+		\draw [style=one arrow] (10) to (16);
+		\draw [in=180, out=0] (10) to (17);
+		\draw [style=one arrow] (15) to (25);
+		\draw [style=one arrow] (15) to (26);
+		\draw [style=one arrow] (15) to (27);
+		\draw [style=one arrow] (15) to (28);
+		\draw [style=one arrow] (25) to (16);
+		\draw [style=one arrow] (16) to (26);
+		\draw [in=120, out=-60] (16) to (27);
+		\draw [style=one arrow] (16) to (28);
+		\draw [style=one arrow] (25) to (17);
+		\draw [style=one arrow] (17) to (26);
+		\draw [style=one arrow] (17) to (27);
+		\draw [style=one arrow] (17) to (28);
+		\draw [style=frame] (34.center)
+			 to (40.center)
+			 to (36.center)
+			 to (37.center)
+			 to (38.center)
+			 to (39.center)
+			 to (32.center)
+			 to [in=180, out=0] (33.center)
+			 to cycle;
+		\draw [style=node edge] (67.center)
+			 to (83.center)
+			 to (68.center)
+			 to (69.center)
+			 to (82.center)
+			 to (66.center)
+			 to cycle;
+		\draw [style=node edge] (88.center)
+			 to (78.center)
+			 to (79.center)
+			 to (89.center)
+			 to (80.center)
+			 to (81.center)
+			 to cycle;
+		\draw [style=node edge] (75.center)
+			 to (87.center)
+			 to (76.center)
+			 to (77.center)
+			 to (86.center)
+			 to (74.center)
+			 to cycle;
+		\draw [style=node edge] (70.center)
+			 to (71.center)
+			 to (85.center)
+			 to (72.center)
+			 to (73.center)
+			 to (84.center)
+			 to cycle;
+		\draw [style=frame] (97.center) to (101.center);
+		\draw [style=frame] (101.center) to (98.center);
+		\draw [style=frame] (98.center) to (103.center);
+		\draw [style=frame] (103.center) to (99.center);
+		\draw [style=frame] (99.center) to (104.center);
+		\draw [style=frame] (104.center) to (100.center);
+		\draw [style=frame] (100.center) to (102.center);
+		\draw [style=frame] (102.center) to (97.center);
+		\draw [style=frame] (105.center) to (107.center);
+		\draw [style=frame] (107.center) to (106.center);
+		\draw [style=frame] (108.center) to (110.center);
+		\draw [style=frame, in=90, out=-90] (110.center) to (109.center);
+		\draw [style=frame] (105.center) to (111.center);
+		\draw [style=frame] (111.center) to (108.center);
+		\draw [style=frame] (109.center) to (112.center);
+		\draw [style=frame] (112.center) to (106.center);
+		\draw [style=frame connector, bend left=15] (33.center) to (101.center);
+		\draw [style=frame connector, bend left=15] (101.center) to (111.center);
+		\draw [style=frame connector, in=0, out=-90, looseness=0.50] (112.center) to (115);
+	\end{pgfonlayer}
+\end{tikzpicture}

@@ -1,11 +1,33 @@
 %! TEX program = pdflatex
 \documentclass[5p, twocolumn, times, sort&compress]{elsarticle}
-\usepackage{url}
+\usepackage{url}  % to fix underscores in URLs in BibTex
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amssymb}
 \usepackage{amsfonts}
+\usepackage{mathtools}
+\usepackage[section]{placeins} % limit floats (figs, tables, etc.) to the same sections
+\usepackage{tikz}  % visualizing computational graphs
+\usepackage{tikzscale}  % allowing using \includegraphics on tikz files
+\usepackage{relsize}  % setting font sizes relative to the current font size
+\usepackage{makecell}  % create a multi-line cell
+\usepackage{stfloats}  % for positioning of figure* on the same page
+\usepackage{booktabs}  % table separation lines
+\usepackage{threeparttable}  % three part table
+\usepackage[group-separator={,}]{siunitx}  % unifying the styles of numbers, units, and quantities
+
+% temporary; can be deleted
 \usepackage{lipsum}  % generate random text as place holders
+
+% helpful macros
+\DeclareMathOperator*{\argmin}{arg\,min} % thin space, limits underneath in displays
+
+% tikz setup
+\input{tikzit.tikzstyles}
+
+% figure-related
+\graphicspath{{figs}}  % default figure search path
+\DeclareGraphicsExtensions{.pdf,.png}  % priority of the formats of figures
 
 % bibliography style
 \bibliographystyle{elsarticle-num}
@@ -13,6 +35,7 @@
 % journal name
 \journal{Journal of Computational Science}
 
+% main body
 \begin{document}
 
     % front matter
@@ -54,13 +77,13 @@
     \end{frontmatter}
 
     \section{Introduction}
-    \lipsum[2] And \cite{chen_variants_2012, rowley_spectral_2009, rahaman_spectral_2019}.
+    \lipsum[1-5] And \cite{chen_variants_2012, rowley_spectral_2009, rahaman_spectral_2019}.
 
     \section{Method}
-    \lipsum[3]
+    \input{methods.tex}
 
     \section{Results}
-    \lipsum[4]
+    \input{results.tex}
 
     \section{Discussion}
     \lipsum[5]
