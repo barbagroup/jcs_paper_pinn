@@ -8,7 +8,6 @@
 \usepackage{mathtools}
 \usepackage[section]{placeins} % limit floats (figs, tables, etc.) to the same sections
 \usepackage{tikz}  % visualizing computational graphs
-\usepackage{tikzscale}  % allowing using \includegraphics on tikz files
 \usepackage{relsize}  % setting font sizes relative to the current font size
 \usepackage{makecell}  % create a multi-line cell
 \usepackage{stfloats}  % for positioning of figure* on the same page
@@ -96,6 +95,10 @@
 
     % bibliography
     \bibliography{references}
+
+    \appendix
+    \section{Supplement}
+    \input{supp.tex}
 
 \end{document}
 % vim:ft=tex:
