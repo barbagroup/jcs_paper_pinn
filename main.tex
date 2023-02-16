@@ -19,7 +19,11 @@
 \usepackage{lipsum}  % generate random text as place holders
 
 % helpful macros
-\DeclareMathOperator*{\argmin}{arg\,min} % thin space, limits underneath in displays
+\DeclareMathOperator*{\argmin}{arg\,min}  % thin space, limits underneath in displays
+\RenewDocumentCommand{\vec}{m}{\mathbf{#1}}  % ISO-style vector notation
+\NewDocumentCommand{\mat}{m}{\mathbfit{#1}}  % ISO-style matrix notation
+\NewDocumentCommand{\diff}{}{\mathop{}\!\mathrm{d}}  % ISO-style upright ordinary differentiation
+\NewDocumentCommand{\pdiff}{mm}{\frac{\partial #1}{\partial #2}}  % partial differential terms
 
 % tikz setup
 \input{tikzit.tikzstyles}
@@ -81,8 +85,12 @@
     \section{Method}
     \input{methods.tex}
 
-    \section{Results}
-    \input{results.tex}
+    \section{Verification and Validation}
+    \input{results_1.tex}
+    \input{results_2.tex}
+
+    \section{Case Study: 2D Cylinder Flow at $Re=\num{200}$}
+    \input{results_3.tex}
 
     \section{Discussion}
     \lipsum[5]
