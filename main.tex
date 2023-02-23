@@ -6,6 +6,7 @@
 \usepackage{amssymb}
 \usepackage{amsfonts}
 \usepackage{mathtools}
+\usepackage[overload]{empheq}
 \usepackage[section]{placeins} % limit floats (figs, tables, etc.) to the same sections
 \usepackage{tikz}  % visualizing computational graphs
 \usepackage{relsize}  % setting font sizes relative to the current font size
@@ -21,7 +22,7 @@
 % helpful macros
 \DeclareMathOperator*{\argmin}{arg\,min}  % thin space, limits underneath in displays
 \RenewDocumentCommand{\vec}{m}{\mathbf{#1}}  % ISO-style vector notation
-\NewDocumentCommand{\mat}{m}{\mathbfit{#1}}  % ISO-style matrix notation
+\NewDocumentCommand{\mat}{m}{\boldsymbol{\mathit{#1}}}  % ISO-style matrix notation
 \NewDocumentCommand{\diff}{}{\mathop{}\!\mathrm{d}}  % ISO-style upright ordinary differentiation
 \NewDocumentCommand{\pdiff}{mm}{\frac{\partial #1}{\partial #2}}  % partial differential terms
 

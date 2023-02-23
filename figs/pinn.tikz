@@ -24,11 +24,11 @@
 	\node [above right=0.3 of nh15, none]	(nskip3) {$\cdots$};
 
 	% network's nodes: the last hidden layer
-	\node [right=0.6 of nh12, param] (nh22) {$h_2^L$};
-	\node [above=0.5 of nh22, param] (nh21) {$h_1^L$};
+	\node [right=0.6 of nh12, param] (nh22) {$h_2^\ell$};
+	\node [above=0.5 of nh22, param] (nh21) {$h_1^\ell$};
 	\node [below=0.5 of nh22, none]	(nh23) {$\vdots$};
 	\node [below=0.5 of nh23, none]	(nh24) {$\vdots$};
-	\node [below=0.5 of nh24, param] (nh25) {$h_{N_L}^L$};
+	\node [below=0.5 of nh24, param] (nh25) {$h_{N_\ell}^\ell$};
 
 	% network's nodes: the output layer
 	\node [right=0.5 of nh22, input] (nout1) {$u$};

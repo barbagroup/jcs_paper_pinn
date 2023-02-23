@@ -1,19 +1,102 @@
 %! TEX root = main.tex
 
-\lipsum[1]
+This work aims at solving the 2D incompressible Navier-Stokes equations, as show below:
+\begin{empheq}[left=\left\{\,, right=\right.]{equation}\label{eq:orig-ns}
+    \begin{aligned}
+    &\nabla \cdot \vec{u} = 0 \\
+    &\pdiff{\vec{u}}{t} + \left(\vec{u} \cdot \nabla\right) \vec{u}
+        =
+        -\frac{1}{\rho}\nabla p + \nu \nabla^2 \vec{u}
+    \end{aligned}
+\end{empheq}
+where $\vec{u} \equiv \left[ u \enspace v \right]^\mathsf{T}$, $p$, $\nu$, and $\rho$ denote the velocity vector, pressure, kinematic viscosity, and the density, respectively.
+Let $\vec{x} \equiv \left[ x \enspace y \right]^\mathsf{T} \in \Omega$ and $t \in \left[0,\enspace T\right]$ denote the spatial and temporal domains.
+The velocity $\vec{u}$ and pressure $p$ are functions of $\vec{x}$ and $t$ for a given $\rho$ and $\nu$.
+The solution to the Navier-Stokes equations is subject to initial conditions $\vec{u}(\vec{x}, t) = \left[ u_0(\vec{x}) \enspace v_0(\vec{x}) \right]^\mathsf{T}$ and $p(\vec{x}, t) = p_0(\vec{x})$ for $\vec{x} \in \Omega$ and $t=0$.
+The Dirichlet boundary conditions are $u(\vec{x}, t) = u_D(\vec{x}, t)$ and $v(\vec{x}, t) = v_D(\vec{x}, t)$, corresponding to boundaries $\vec{x} \in \Gamma_{\displaystyle u_D}$ and $\Gamma_{\displaystyle v_D}$, respectively.
+The Neumann boundary conditions are $\pdiff{u}{\vec{n}}(\vec{x}, t)=u_N(\vec{x}, t)$ and $\pdiff{v}{\vec{n}}=v_N(\vec{x}, t)$, defined on boundaries $\vec{x} \in \Gamma_{\displaystyle u_N}$ and $\Gamma_{\displaystyle v_N}$ correspondingly.
+Note that in incompressible flow, pressure is a Lagrangian multiplier to enforce the divergence-free condition and does not need boundary conditions theoretically.
 
-\begin{figure*}[!t]
+\begin{figure*}
     \centering
     \normalsize
     \resizebox{\textwidth}{!}{\input{figs/pinn.tikz}\unskip}
-    \caption[
-        A graphical demonstration of the workflow in PINNs
-    ]{
-        A graphical demonstration of the workflow in PINNs
+    \caption{
+        A graphical demonstration of the workflow in PINNs.
+        $\vec{x} \equiv \left[ x \enspace y \right]^\mathsf{T} \in \Omega$ and $t \in \left[0,\enspace T\right]$ denote the spatial and temporal domains.
+        $\vec{u} \equiv \left[ u \enspace v \right]^\mathsf{T}$, $p$, $\nu$, and $\rho$ represent the velocity vector, pressure, kinematic viscosity, and the density, respectively.
+        $G(\vec{x}, t; \theta)$ is a neural network model that approximates the solution to the Navier-Stokes equations with a set of free model parameters denoted by $\theta$.
+        $\left\{h_1^1, \cdots, h_{N_1}^1, \cdots, h_1^\ell, \cdots, h_{N_\ell}^\ell\right\}$, formally called hidden layers in neural networks, can be deemed as some intermediate values or temporary results during the calculations of the approximate solutions.
+        Given a spatial-temporal coordinates $(x, y, t)$, the neural network returns the approximate solution $(u, v, p)$ at this coordinate.
+        We then apply automatic differentiation to obtain required derivatives.
+        With the approximate solutions and the derivatives, we are able to calculate the residuals (also called losses, denoted by symbol $L$) between the approximates and PDEs, as well as the initial and boundary conditions. 
+        Using the aggregated squared losses, we can determine the free model parameters $\theta$ by a least-square fashion.
     }
     \label{fig:pinn-workflow}
 \end{figure*}
 
-\lipsum[3-10]
+In PINNs, we approximate the solutions to equation \eqref{eq:orig-ns} with a neural network model $G(\vec{x}, t; \theta)$:
+\begin{equation}\label{eq:G-network}
+    \begin{bmatrix}
+        u(\vec{x}, t) \\ v(\vec{x}, t) \\ p(\vec{x}, t)
+    \end{bmatrix}
+    \approx
+    G(\vec{x}, t; \theta)
+\end{equation}
+where $\theta$ represents a set of free model parameters we need to determine later.
+A common choice of $G$ is an MLP (multilayer perceptron) network:
+\begin{gather}\label{eq:mlp-formula}
+    \vec{h}^0 \equiv \begin{bmatrix} x & y & t \end{bmatrix}^\mathsf{T} \\
+    \vec{h}^k =
+        \sigma_{k-1}\left(\mat{A}^{k-1}\vec{h}^{k-1}+\vec{b}^{k-1}\right)
+        \text{, for } 1 \le k \le \ell \\
+    \begin{bmatrix} u & v & p \end{bmatrix}^\mathsf{T}
+        \approx
+        \vec{h}^{\ell+1} = \sigma_\ell\left(\mat{A}^\ell\vec{h}^\ell+\vec{b}^\ell\right)
+\end{gather}
+The vectors $\vec{h}^k$ for $1 \le k \le \ell$, which carry intermediate calculation results, are called hidden layers.
+$\ell$ denotes the number of hidden layers.
+The elements in these vectors are called neurons, and $N_k$ for $1 \le k \le \ell$ represents the number of neurons in each hidden layer.
+To have a consistent notation, we use $\vec{h}^0$ to denote the vector of the input to the model $G$, which needs spatial-temporal coordinates as the inputs.
+As well, $\vec{h}^{\ell+1}$ denotes the outputs of $G$, which are the approximate solutions $u$, $v$, and $p$. 
+$\mat{A}^k$ and $\vec{b}^k$ for $0 \le k \le \ell$ are parameter matrices and vectors holding free model parameters.
+In other words, $\theta = \left\{ \mat{A}^0, \vec{b}^0, \cdots, \mat{A}^\ell, \vec{b}^\ell\right\}$.
+Finally, $\sigma_k$ for $0 \le k \le \ell$ are vector-valued functions.
+They are called activation functions in neural networks and are responsible for the non-linearity in an MLP model.
+Throughout this work, we use $\sigma_0 = \cdots = \sigma_\ell = \sigma(\vec{z}) = \frac{\vec{z}}{1 + \exp(\vec{z})}$.
+$\ell$, $N_k$, and the choices of $\sigma_k$ control the model complexity of the PINNs that use MLP networks.
+
+As all other numerical methods for PDEs, the calculations of spatial and temporal derivatives of velocity and pressure play a crucial role.
+While a numerical approximation (e.g., finite difference) may be a more robust choice (as seen in early-day literature \cite{dissanayake_neural-network-based_1994,lagaris_artificial_1998}), it is common to see the use of automatic differentiation nowadays.
+Automatic differentiation is an algorithm that applies the chain rule of calculus to get exact derivatives.
+Note that the word {\it exact} here means being exact in terms of the model $G$, rather than to the true solution of the Navier-Stokes equations. 
+A detailed review of automatic differentiation can be found in reference \cite{griewank_automatic_1988}.
+Major deep learning programming libraries, such as TensorFlow and PyTorch, have implemented automatic differentiation.
+
+Once we have derivatives, we are able to calculate residuals (or losses in the terminology of machine learning).
+As shown in figure \ref{fig:pinn-workflow}, given a spatial-temporal coordinate $(x, y, t)$, we can calculate up to \num{10} loss terms, depending on where in the domain this spatial-temporal point is located. 
+Figure \ref{fig:pinn-workflow} is only shown as a demonstration using the solution workflow specifically for the Navier-Stokes equations described in the first paragraph in this section.
+The number and definitions of loss terms may change, for example, when we have some boundary segments with Robin conditions or when we are solving 3D problems.
+
+Finally, we determine the free model parameters using a least-square optimization, as shown in the last block in figure \ref{fig:pinn-workflow}.
+To be more specific, we used the Adam optimization for this process. 
+We first randomly sample some spatial-temporal points from the computational domain, including all boundaries.
+These points are called {\it training points} in the terminology of machine learning.
+Depending on where a training point is located in the domain, the point may result in multiple loss terms, as described in the previous paragraph.
+An aggregated squared loss is obtained over all loss terms of all training points.
+In this specific work, all loss terms have the same weights.
+The Adam optimization then finds the optimal model parameters (i.e., $\theta=\left\{\mat{A}^0, \vec{b}^0, \cdots, \mat{A}^\ell, \vec{b}^\ell\right\}$) based on the gradients of the aggregated loss with respect to model parameters.
+In other words, the desired model parameters are those giving the minimal aggregated squared loss.
+
+Note that, in figure \ref{fig:pinn-workflow}, we use if-conditions to determine which loss terms to calculate regarding a training point.
+In practice, however, we sample points into subgroups separately from within the domain, on the boundaries, and at $t=0$.
+Then each subgroup of training points is only responsible for known loss terms.
+We also use a batched approach for the optimization.
+That is, not all training points are used during each individual optimization iteration.
+The batched approach only uses a portion of the training points to calculate the losses and the gradients of the aggregated loss in each optimization iteration.
+Finally, the term {\it training} will be used interchangeably with the optimization process.
+
+In this section, we only introduce the specific details of PINNs required for our work.
+References \cite{dissanayake_neural-network-based_1994,lagaris_artificial_1998,cai_physics-informed_2021} provide more details.
 
 % vim:ft=tex:
