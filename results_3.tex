@@ -46,7 +46,7 @@ The Adam optimizer is also the same, except that now we ran for \num{1000000} op
 The parameters of the cyclical learning rate scheduler are now: $\eta_{low}=\num{1e-6}$, $\eta_{high}=\num{1e-2}$, $N_c=5000$, and $\gamma=\num{0.9999915}$.
 The hardware used was one NVIDIA A100 GPU for all PINN solvers.
 
-\subsection{Results}
+\subsection{Results}\label{sec:cylinder-re200-results}
 
 The overall run times for the steady, unsteady, and data-driven PINN solvers are about 28 hours, 31 hours, and 33.5 hours using one A100 GPU.
 The PetIBM simulation, on the other hand, took around 1.7 hours with a K40 GPU, which is 5-generation-behind in terms of the computing technology.
@@ -228,7 +228,7 @@ Moreover, judging by the locations of vortex centers, vortices also move slower 
 The edges of the vortices move at a different speed from that of the vortex centers in the PINN.
 This might be hinting the existence of the numerical dispersion in the PINN.
 
-\subsection{Dynamical Modes and Koopman Analysis}
+\subsection{Dynamical Modes and Koopman Analysis}\label{sec:cylinder-re200-koopman}
 
 In this subsection, we conducted spectral analysis on the cylinder flow to extract frequencies embedded in the simulation results.
 Fluid flow is a dynamical system, and how information (or signals) propagates in time plays an important role.
