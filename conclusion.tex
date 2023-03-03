@@ -1,0 +1,20 @@
+%! TEX root = main.tex
+
+In this study, we aimed to expand upon our previous work \cite{chuang_experience_2022} by exploring the effectiveness of physics-informed neural networks (PINNs) in predicting vortex shedding in a 2D cylinder flow at $Re = 200$.
+It should be noted that our focus is limited to forward problems involving non-parameterized, incompressible Navier-Stokes equations.
+
+To ensure the accuracy of our results, we verified and validated all involved solvers.
+Aside from using PetIBM result as a baseline, we used three PINN solvers in the case study: a steady data-free PINN, an unsteady data-free PINN, and a data-driven PINN.
+Our results indicate that while both data-free PINNs produced steady-state solutions similar to traditional CFD solvers, they failed to predict vortex shedding.
+On the other hands, the data-driven PINN predicted vortex shedding only within the timeframe where PetIBM training data were available, and beyond this timeframe, the prediction quickly reverted to the steady-state solution.
+Additionally, the data-driven PINN showed limited extrapolation capabilities and produced meaningless predictions at unseen coordinates.
+Our Koopman analysis suggests that PINNs may be dissipative and dispersive, which inhibits oscillation and causes the flow to return to a steady state.
+This analysis also supports the idea of a spectral bias inherent in neural networks \cite{rahaman_spectral_2019}.
+
+One interesting research question that arises from our findings is how the cost-performance ratio of data-driven PINNs compares to classical deep learning approaches.
+While data-free PINNs are commonly considered as numerical methods for solving PDEs, data-driven PINNs are more akin to supervised machine/deep learning.
+However, data-free PINNs have been shown to have inferior cost-performance ratios compared to traditional numerical methods for PDEs (in terms of forward and non-parameterized problems).
+The literature suggests that PINNs are best utilized in a data-driven configuration, rather than data-free settings.
+Therefore, it would be valuable to quantitatively compare the benefits of data-driven PINNs to those of classical deep learning approaches and understand the associated cost-performance trade-offs.
+
+% vim:ft=tex
