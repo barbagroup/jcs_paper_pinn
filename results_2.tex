@@ -2,42 +2,42 @@
 
 \subsection{Validation: 2D Cylinder, $Re=\num{40}$}\label{sec:val_2d_cylinder_re40}
 
-We used 2D cylinder flow at $Re=40$ to validate the solvers because it has a similar configuration with the $Re=200$ case.
-The $Re=40$ flow, however, does not have vortex shedding and reaches a steady-state solution, making it suitable to for validating the core functionality of the code.
-Experimental data for this flow configuration also widely exist.
+We used 2D cylinder flow at $Re=40$ to validate the solvers because it has a similar configuration with the $Re=200$ case that we will study later.
+The $Re=40$ flow, however, does not exhibit vortex shedding and reaches a steady-state solution, making it suitable for validating the core functionality of the code.
+Experimental data for this flow configuration is also widely available.
 
 The spatial and temporal computational domains are $[-10$, $30]$ $\times$ $[-10$, $10]$ and $t \in [0, 20]$.
-A cylinder with a radius of $0.5$ sits at $x=y=0$.
+A cylinder with a nondimensional radius of $0.5$ sits at $x=y=0$.
 Density is $\rho=1$, and kinematic viscosity is $\nu=0.025$.
 The initial conditions are $u=1$ and $v=0$ everywhere in the spatial domain.
 The boundary conditions are $u=1$ and $v=0$ on $x=-10$ and $y=\pm 10$.
-At the outlet, i.e., $x=30$, the boundary conditions are 1D convective conditions:
+At the outlet, i.e., $x=30$, the boundary conditions are set to 1D convective conditions:
 \begin{equation}\label{eq:convec-bc}
     \pdiff{}{t}\begin{bmatrix} u \\ v \end{bmatrix}
     +
-    c\pdiff{}{\vec{n}}\begin{bmatrix} u \\ v \end{bmatrix} = 0
+    c\pdiff{}{\vec{n}}\begin{bmatrix} u \\ v \end{bmatrix} = 0,
 \end{equation}
 where $\vec{n}$ is the normal vector of the boundary (pointing outward), and $c=1$ is the convection speed.
 
-We ran the PetIBM validation on a machine with one NVIDIA K40 GPU and 6 cores of Intel i7-5930K.
+We ran the PetIBM validation case on a workstation with one (very old) NVIDIA K40 GPU and 6 CPU cores of the Intel i7-5930K processor.
 The grid resolution is $562 \times 447$ with $\Delta t=\num{e-2}$.
 The tolerance for all linear solvers in PetIBM was $\num{e-14}$.
-We used the same linear solver configurations as those in the TGV verification.
+We used the same linear solver configurations as those in the TGV verification case.
 
-As for the PINN solvers, we validate two implementations with this cylinder flow because both codes were also used in the $Re=200$ case (as shown in section \ref{sec:case-study}).
-The first implementation is an unsteady PINN solver, which is the same piece of code used in the verification (section \ref{sec:verification}).
+As for the PINN solvers, we validated two implementations with this cylinder flow because both codes were also used in the $Re=200$ case (as shown in section \ref{sec:case-study}).
+The first implementation is an unsteady PINN solver, which is the same piece of code used in the verification case (section \ref{sec:verification}).
 It solves the unsteady Navier-Stokes equations as shown in figure \ref{fig:pinn-workflow}.
 The second one is a steady PINN solver, which solves the steady Navier-Stokes equations.
 The workflow of the steady PINN solver works similar to that in figure \ref{fig:pinn-workflow} except that all time-related terms and losses are dropped.
 
-Both PINN solvers used MLP networks with \num{6} hidden layers and \num{512} neurons.
+Both PINN solvers used MLP networks with \num{6} hidden layers and \num{512} neurons each.
 The Adam optimizer configuration is the same as that in section \ref{sec:verification}.
 The learning rate scheduler is a cyclical learning rate with $\eta_{low}=\num{e-6}$, $\eta_{high}=\num{e-2}$, $N_c=\num{5000}$, and $\gamma={9.9998e-1}$.
-We ran all PINN-related validations with one NVIDIA A100 GPU.
-The PINN solvers use single-precision floats.
+We ran all PINN-related validations with one NVIDIA A100 GPU,
+all using single-precision floats.
 
 To evaluate PDE losses, \num{256000000} spatial-temporal points were randomly sampled from the computational domain and the desired simulation time range.
-Each iteration, \num{25600} points were used to evaluate the PDE losses, so the Adam optimizer would see each points \num{40} times during the \num{400000}-iteration optimization.
+In each iteration, \num{25600} points were used to evaluate the PDE losses, so the Adam optimizer would see each points \num{40} times on average during the \num{400000}-iteration optimization.
 \num{25600000} points were sampled on the boundaries at $y=\pm 10$, and \num{12800000} were sampled on the boundaries of $x=-10$ and $x=30$.
 On the cylinder surface, the number of spatial-temporal points were \num{5120000}.
 In each iteration, \num{2560}, \num{1280}, and \num{512} points were used, respectively.
@@ -65,16 +65,16 @@ PetIBM used central difference to calculate the vorticity, while the PINN solver
 Figure \ref{fig:cylinder-re40-drag-lift} gives the drag and lift coefficients ($C_D$ and $C_L$) with respect to simulation time.
 Note the steady PINN solver's results were omitted as it does not have time history.
 The PINN's results visually agrees with PetIBM's.
-Table \ref{table:cylinder-re40-cd-comparison} compares the values of $C_D$ against the experimental data and simulation data from literature.
+Table \ref{table:cylinder-re40-cd-comparison} compares the values of $C_D$ against the experimental data and simulation data from the literature.
 As seen from the table, values from different works in the literature do not closely agree with each other.
-Though there is not a single value to compare against, at least the $C_D$ from the PINN solvers and PetIBM fall into the range of others' works.
+Though there is not a single value to compare against, at least the $C_D$ from the PINN solvers and PetIBM fall into the range of other published works.
 We consider the results of $C_D$ validated for the PINN solvers and PetIBM.
 
 \begin{figure}
     \centering%
     \includegraphics[width=\columnwidth]{cylinder-2d-re40/drag-lift-coeffs}%
     \caption{%
-        Drag and lift coefficients of 2D cylinder flow at $Re=\num{40}$ w/ PINNs
+        Drag and lift coefficients of 2D cylinder flow at $Re=\num{40}$ w/ PINNs.
     }
     \label{fig:cylinder-re40-drag-lift}%
 \end{figure}
@@ -103,7 +103,7 @@ We consider the results of $C_D$ validated for the PINN solvers and PetIBM.
             \item [2] Simulation result
         \end{tablenotes}
         \caption{%
-            Validation of drag coefficients.%
+            Validation of drag coefficients. %
             $C_D$, $C_{D_p}$, and $C_{D_f}$ denote the coefficients of total drag, pressure drag, %
             and friction drag, respectively.%
         }%
@@ -112,8 +112,8 @@ We consider the results of $C_D$ validated for the PINN solvers and PetIBM.
 \end{table}%
 
 Finally, figure \ref{fig:cylinder-re40-pinn-surfp} shows the pressure distribution on the cylinder surface.
-Again, though there is not a single solution that all works agree upon, the results from PetIBM and the PINN solvers visually agree with literature.
-We considered PetIBM and both PINN solvers validated.
+Again, though there is not a single solution that all works agree upon, the results from PetIBM and the PINN solvers visually agree with the published literature.
+We consider PetIBM and both PINN solvers validated.
 
 \begin{figure}
     \centering%
