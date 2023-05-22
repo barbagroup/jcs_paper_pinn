@@ -1,2 +1,9 @@
 elsarticle_manual.pdf
 outputs
+*.aux
+*.log
+*.out
+*.spl
+.DS_Store
+figs/.DS_Store
+elsarticle.cls
