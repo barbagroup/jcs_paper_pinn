@@ -11,4 +11,11 @@ Besides, it is well known that the academic literature is biased to positive res
 
 In this paper, we examine the solution of Navier-Stokes equations using PINNs in flows with instabilities, particularly vortex shedding. 
 Fluid dynamic instabilities are ubiquitous in nature and engineering applications, and any method arising as a competitor to traditional CFD should be able to handle them. 
-In a previous conference paper, we already reported on our observations of the limitations of PINNs in this context \cite{chuang_predicting_2020}.
+In a previous conference paper, we already reported on our observations of the limitations of PINNs in this context \cite{chuang_predicting_2020}. 
+Although the solution of a laminar flow with vorticity, the classical Taylor-Green vortex, was well represented by a PINN solver, the same network architecture failed in a flow with vortex shedding. 
+The PINN solver reverted to the steady state solution in two-dimensional flow past a circular cylinder at $Re=200$. 
+Here, investigate this failure in more detail, comparing with a traditional CFD solver and with a data-driven PINN that receives as training data the solution of the CFD solver. 
+We look at various fluid diagnostics, and also use dynamic mode decomposition (DMD) to analyze the flow and help explain the difficulty of the PINN solver to capture oscillatory solutions.
+
+Our PINN solver was built using the software library \emph{Modulus} by NVIDIA, a high-level package built on PyTorch.
+For the traditional CFD solver, we used our own code, \emph{PetIBM}, which is open-source and available on GitHub \cite{chuang_petibm_2018}.
