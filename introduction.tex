@@ -1,0 +1,14 @@
+%! TEX root = main.tex
+
+In recent years, research interest surrounding Physics-Informed Neural Networks (PINNs) has surged.
+The idea of using neural networks to represent solutions of ordinary and partial differential equations goes back to the 1990s \cite{dissanayake_neural-network-based_1994,lagaris_artificial_1998}, but upon the term PINN being coined about five years ago, the field exploded. 
+Partly, it reflects the immense popularity of all things machine learning and artificial intelligence (ML/AI). 
+It also is very attractive to be able to solve differential equations without meshing the domain, and without having to discretize the equations in space and time. 
+PINNs are easily implemented in a few lines of code, taking advantage of the ML frameworks that have become available in recent years, such as PyTorch. 
+In contrast, traditional numerical solvers for PDEs such as the Navier-Stokes equations can require years of expertise and thousands of lines of code to develop, test and maintain. 
+The general optimism in this field has perhaps held back critical examinations of the limitations of PINNs, and the challenges of using them in practical applications. 
+Besides, it is well known that the academic literature is biased to positive results, and negative results are rarely published. 
+
+In this paper, we examine the solution of Navier-Stokes equations using PINNs in flows with instabilities, particularly vortex shedding. 
+Fluid dynamic instabilities are ubiquitous in nature and engineering applications, and any method arising as a competitor to traditional CFD should be able to handle them. 
+In a previous conference paper, we already reported on our observations of the limitations of PINNs in this context \cite{chuang_predicting_2020}.
