@@ -5,13 +5,12 @@ In the real world, vortex shedding is triggered by natural perturbations.
 In traditional numerical simulations, however, the shedding is triggered by various numerical noises, including rounding and truncation errors.
 These numerical noises mimic natural perturbations.
 Therefore, a steady solution could be physically valid for cylinder flow at $Re = 200$ in a perfect world with no numerical noise.
-As PINNs are also subject to numerical noise, we expected to observe vortex shedding in the simulations.
-However, the results showed that the data-free unsteady PINN converged to a steady-state solution.
-Even the data-driven PINN restored to a steady-state solution beyond the timeframe with PetIBM's data.
+As PINNs are also subject to numerical noise, we expected to observe vortex shedding in the simulations, but the results show that instead the data-free unsteady PINN converged to a steady-state solution.
+Even the data-driven PINN reverted to a steady-state solution beyond the timeframe that was fed with PetIBM's data.
 
 It is unlikely that the steady-state behavior has to do with perturbations.
 In traditional numerical simulations, it is often challenging to induce vortex shedding, particularly in symmetrical computational domains.
-However, we can still manually trigger shedding by incorporating non-uniform initial conditions, which serve as perturbations.
+However, we can still trigger shedding by incorporating non-uniform initial conditions, which serve as perturbations to the steady state solution.
 In the data-driven PINN, the training data from PetIBM can be considered as such non-uniform initial conditions.
 The vortex shedding already exists in the training data, yet it did not continue beyond that point, indicating that the perturbation is not the primary factor responsible for the steady-state behavior.
 This suggests that PINNs have a different reason for their inability to generate vortex shedding compared to traditional CFD solvers.
@@ -25,7 +24,7 @@ Even within the timeframe with the PetIBM training data, the data-driven PINN ma
 Although the vortex shedding in PetIBM's data forces the PINN to learn higher-frequency modes to some extent, the shedding modes are generally more difficult to learn due to the spectral bias.
 This claim is supported by the history of the drag and lift coefficients of the data-driven PINN (the red dashed line in figure \ref{fig:cylinder-re200-drag-lift}), which was still unable to predict the peak values in $t \in \left[125, 140\right]$, despite extensive training.
 
-The suspicion of spectral bias prompted us to conduct spectral analysis using Koopman analysis, presented in section \ref{sec:cylinder-re200-koopman}.
+The suspicion of spectral bias prompted us to conduct spectral analysis by obtaining Koopman modes, presented in section \ref{sec:cylinder-re200-koopman}.
 The Koopman analysis results are consistent with the existence of spectral bias: the data-driven PINN is not able to learn discrete frequencies well, even when trained with PetIBM's data that contain modes with discrete frequencies.
 
 The Koopman analysis on the data-driven PINN's prediction reveals many additional frequencies that do not exist in the training data from PetIBM, and many damped modes that have a damping effect and reduce or prohibit oscillation.
