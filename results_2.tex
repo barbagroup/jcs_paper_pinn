@@ -49,7 +49,7 @@ In our experience, it is possible to reduce the run time in half but obtain the 
 
 \begin{figure}
     \centering%
-    \includegraphics[width=\columnwidth]{cylinder-2d-re40/loss-hist-unsteady.png}%
+    \includegraphics[width=\columnwidth]{cylinder-2d-re40/loss-hist.png}%
     \caption{%
         Training convergence history of 2D cylinder flow at $Re=\num{40}$ for both steady and unsteady PINN solvers.
     }
@@ -86,7 +86,7 @@ We consider the results of $C_D$ validated for the PINN solvers and PetIBM.
             \toprule
             & $C_D$ & $C_{D_p}$ & $C_{D_f}$ \\
             \midrule
-            Steady PINN &  &  &  \\
+            Steady PINN & 1.62 & 1.06 & 0.55 \\
             Unsteady PINN & 1.60 & 1.06 & 0.55 \\
             PetIBM & 1.63 & 1.02 & 0.61 \\
             Rosetti et al., 2012\cite{rosetti_urans_2012}\tnote{1} & \num{1.74+-0.09} & n/a & n/a \\
@@ -117,9 +117,9 @@ We consider PetIBM and both PINN solvers validated.
 
 \begin{figure}
     \centering%
-    \includegraphics[width=0.95\columnwidth]{cylinder-2d-re40/surface-pressure-unsteady}%
+    \includegraphics[width=0.95\columnwidth]{cylinder-2d-re40/surface-pressure}%
     \caption{%
-        Surface pressure distribution of 2D cylinder flow at $Re=\num{40}$ w/ unsteady PINN
+        Surface pressure distribution of 2D cylinder flow at $Re=\num{40}$
     }
     \label{fig:cylinder-re40-pinn-surfp}%
 \end{figure}
@@ -128,7 +128,7 @@ We consider PetIBM and both PINN solvers validated.
     \centering%
     \includegraphics{cylinder-2d-re40/contour-comparison}%
     \caption{%
-        Contour comparison of 2D cylinder flow at $Re=\num{40}$ w/ unsteady PINN
+        Contour comparison of 2D cylinder flow at $Re=\num{40}$
     }
     \label{fig:cylinder-re40-contours}%
 \end{figure*}
