@@ -1,0 +1,4 @@
+[submodule "repro-pack"]
+	path = repro-pack
+	url = https://github.com/barbagroup/chuang-dissertation-repro-pack.git
+	branch = jcs-paper
