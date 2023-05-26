@@ -4,6 +4,9 @@ outputs
 *.log
 *.out
 *.spl
+*.blg
+*.synctex.gz
+*.fdb_latexmk
 .DS_Store
 figs/.DS_Store
 elsarticle.cls
