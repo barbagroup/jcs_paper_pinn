@@ -24,7 +24,7 @@ The grid resolution is $562 \times 447$ with $\Delta t=\num{e-2}$.
 The tolerance for all linear solvers in PetIBM was $\num{e-14}$.
 We used the same linear solver configurations as those in the TGV verification case.
 
-As for the PINN solvers, we validated two implementations with this cylinder flow because both codes were also used in the $Re=200$ case (as shown in section \ref{sec:case-study}).
+We validated two implementations of the PINN method with this cylinder flow because both codes were used in the $Re=200$ case (section \ref{sec:case-study}).
 The first implementation is an unsteady PINN solver, which is the same piece of code used in the verification case (section \ref{sec:verification}).
 It solves the unsteady Navier-Stokes equations as shown in figure \ref{fig:pinn-workflow}.
 The second one is a steady PINN solver, which solves the steady Navier-Stokes equations.
@@ -37,8 +37,8 @@ We ran all PINN-related validations with one NVIDIA A100 GPU,
 all using single-precision floats.
 
 To evaluate PDE losses, \num{256000000} spatial-temporal points were randomly sampled from the computational domain and the desired simulation time range.
-In each iteration, \num{25600} points were used to evaluate the PDE losses, so the Adam optimizer would see each points \num{40} times on average during the \num{400000}-iteration optimization.
-\num{25600000} points were sampled on the boundaries at $y=\pm 10$, and \num{12800000} were sampled on the boundaries of $x=-10$ and $x=30$.
+The PDE losses were evaluated on \num{25600} points in each iteration, so the Adam optimizer would see each point \num{40} times on average during the \num{400000}-iteration optimization.
+On the boundaries, \num{25600000} points were sampled  at $y=\pm 10$, and \num{12800000} at $x=-10$ and $x=30$.
 On the cylinder surface, the number of spatial-temporal points were \num{5120000}.
 In each iteration, \num{2560}, \num{1280}, and \num{512} points were used, respectively.
 
@@ -56,19 +56,6 @@ In our experience, it is possible to reduce the run time in half but obtain the 
     \label{fig:cylinder-re40-pinn-loss}%
 \end{figure}
 
-Figure \ref{fig:cylinder-re40-contours} shows the comparison of the steady-state flow fields (i.e., the snapshots at $t=20$ for PetIBM and the unsteady PINN solver).
-The PINN solvers' results visually agree with PetIBM's.
-The variation in the vorticity of PINNs only happens at the contour line of \num{0}, so it is likely caused by trivial rounding errors.
-Note that vorticity is obtained by post-processing for all solvers.
-PetIBM used central difference to calculate the vorticity, while the PINN solvers used automatic differentiation to obtain it.
-
-Figure \ref{fig:cylinder-re40-drag-lift} gives the drag and lift coefficients ($C_D$ and $C_L$) with respect to simulation time.
-Note the steady PINN solver's results were omitted as it does not have time history.
-The PINN's results visually agrees with PetIBM's.
-Table \ref{table:cylinder-re40-cd-comparison} compares the values of $C_D$ against the experimental data and simulation data from the literature.
-As seen from the table, values from different works in the literature do not closely agree with each other.
-Though there is not a single value to compare against, at least the $C_D$ from the PINN solvers and PetIBM fall into the range of other published works.
-We consider the results of $C_D$ validated for the PINN solvers and PetIBM.
 
 \begin{figure}
     \centering%
@@ -79,9 +66,36 @@ We consider the results of $C_D$ validated for the PINN solvers and PetIBM.
     \label{fig:cylinder-re40-drag-lift}%
 \end{figure}
 
-\begin{table}
+Figure \ref{fig:cylinder-re40-drag-lift} gives the drag and lift coefficients ($C_D$ and $C_L$) with respect to simulation time, where PINN and PetIBM visually agree.
+Note the results with steady PINN were omitted as it does not have time history.
+Table \ref{table:cylinder-re40-cd-comparison} compares the values of $C_D$ against experimental data and simulation data from the literature.
+Values from different works in the literature do not closely agree with each other.
+Though there is not a single value to compare against, at least the $C_D$ from the PINN solvers and PetIBM fall into the range of other published works.
+We consider the results of $C_D$ validated for the PINN solvers and PetIBM.
+
+
+\begin{figure}
     \centering%
-    \begin{threeparttable}[b]
+    \includegraphics[width=0.95\columnwidth]{cylinder-2d-re40/surface-pressure}%
+    \caption{%
+        Surface pressure distribution of 2D cylinder flow at $Re=\num{40}$
+    }
+    \label{fig:cylinder-re40-pinn-surfp}%
+\end{figure}
+
+Figure \ref{fig:cylinder-re40-pinn-surfp} shows the pressure distribution on the cylinder surface.
+Again, though there is not a single solution that all works agree upon, the results from PetIBM and the PINN solvers visually agree with the published literature.
+We consider PetIBM and both PINN solvers validated.
+Finally, figure \ref{fig:cylinder-re40-contours} compares the steady-state flow fields (i.e., the snapshots at $t=20$ for PetIBM and the unsteady PINN solver).
+The PINN solvers' results visually agree with PetIBM's.
+The variation in the vorticity of PINNs only happens at the contour line of \num{0}, so it is likely caused by trivial rounding errors.
+Note that vorticity is obtained by post-processing for all solvers.
+PetIBM used central difference to calculate the vorticity, while the PINN solvers used automatic differentiation to obtain it.
+
+
+\begin{table}[h]
+    \centering%
+    \begin{threeparttable}
         \begin{tabular}{lccc}
             \toprule
             & $C_D$ & $C_{D_p}$ & $C_{D_f}$ \\
@@ -111,24 +125,12 @@ We consider the results of $C_D$ validated for the PINN solvers and PetIBM.
     \end{threeparttable}
 \end{table}%
 
-Finally, figure \ref{fig:cylinder-re40-pinn-surfp} shows the pressure distribution on the cylinder surface.
-Again, though there is not a single solution that all works agree upon, the results from PetIBM and the PINN solvers visually agree with the published literature.
-We consider PetIBM and both PINN solvers validated.
-
-\begin{figure}
-    \centering%
-    \includegraphics[width=0.95\columnwidth]{cylinder-2d-re40/surface-pressure}%
-    \caption{%
-        Surface pressure distribution of 2D cylinder flow at $Re=\num{40}$
-    }
-    \label{fig:cylinder-re40-pinn-surfp}%
-\end{figure}
 
 \begin{figure*}
     \centering%
     \includegraphics{cylinder-2d-re40/contour-comparison}%
     \caption{%
-        Contour comparison of 2D cylinder flow at $Re=\num{40}$
+        Contour plots for 2D cylinder flow at $Re=\num{40}$
     }
     \label{fig:cylinder-re40-contours}%
 \end{figure*}
