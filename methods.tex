@@ -1,6 +1,6 @@
 %! TEX root = main.tex
 
-We will be solving the 2D incompressible Navier-Stokes equations in primitive variables form:
+We will be solving the 2D incompressible Navier-Stokes equations in primitive-variable form:
 \begin{empheq}[left=\left\{\,, right=\right.]{equation}\label{eq:orig-ns}
     \begin{aligned}
     &\nabla \cdot \vec{u} = 0 \\
@@ -80,7 +80,7 @@ The number and definitions of loss terms may change, for example, when we have s
 
 Finally, we determine the free model parameters using a least-squares optimization, as shown in the last block in figure \ref{fig:pinn-workflow}.
 To be specific, in this work we used the Adam stochastic optimization method for this process. 
-We first randomly sampled some spatial-temporal points from the computational domain, including all boundaries.
+We first randomly sampled some spatial-temporal collocation points from the computational domain, including all boundaries.
 These points are called {\it training points} in the terminology of machine learning.
 Depending on where a training point is located in the domain, it may result in multiple loss terms, as described in the previous paragraph.
 An aggregated squared loss is obtained over all loss terms of all training points.
@@ -88,9 +88,9 @@ In this work, all loss terms were taken to have the same weights.
 The Adam optimization then finds the optimal model parameters, i.e., $\theta=\left\{\mat{A}^0, \vec{b}^0, \cdots, \mat{A}^\ell, \vec{b}^\ell\right\}$, based on the gradients of the aggregated loss with respect to model parameters.
 In other words, the desired model parameters are those giving the minimal aggregated squared loss.
 
-Note that in figure \ref{fig:pinn-workflow} we consider if-conditions to determine which loss terms to calculate regarding a training point.
+Note that in figure \ref{fig:pinn-workflow} we consider that if-conditions determine the loss terms to calculate on a training point.
 In practice, however, we sample points in subgroups separately from within the domain, on the boundaries, and at $t=0$.
-Then, each subgroup of training points is only responsible for specific loss terms.
+Each subgroup of training points is only responsible for specific loss terms.
 We also use a batched approach for the optimization,
 meaning that not all training points are used during each individual optimization iteration.
 The batched approach only uses a sample of the training points to calculate the losses and the gradients of the aggregated loss in each optimization iteration.

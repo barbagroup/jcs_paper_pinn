@@ -3,8 +3,8 @@
 In our work, we strive for achieving reproducibility of the results, and all the code we developed for this research is available publicly on GitHub under an open-source license, while all the data is available in open archival repositories.
 PetIBM is an open-source CFD library based on the immersed boundary method, and is available at \url{https://github.com/barbagroup/PetIBM} under the BSD-3 license. 
 The software was peer reviewed and published in the Journal of Open Source Software \cite{chuang_petibm_2018}. 
-Our PINN solvers based on the NVIDIA \temph{Modulus} toolkit can be found following the links in the GitHub repository for this paper, located at \url{https://github.com/barbagroup/jcs_paper_pinn/}. 
-The folder prefixed by \texttt{repro-pack} corresponds to a git submodule pointing to the relevant commit on a branch of the repository for the full reproducibility package of the first author's PhD dissertation \cite{chuang_thesis_2023}.
+Our PINN solvers based on the NVIDIA \emph{Modulus} toolkit can be found following the links in the GitHub repository for this paper, located at \url{https://github.com/barbagroup/jcs_paper_pinn/}. 
+There, the folder prefixed by \texttt{repro-pack} corresponds to a git submodule pointing to the relevant commit on a branch of the repository for the full reproducibility package of the first author's PhD dissertation \cite{chuang_thesis_2023}.
 As described in the README of the repro-pack, readers can use pre-generated data for plotting the figures in this paper, or they can re-run the solutions using the code and data available in the repro-pack.
 The latter option is of course limited by the computational resources available to the reader.
 To facilitate reproducibility of the computational environment, we ran all cases using a Docker container for PetIBM (which we ran in a lab workstation), and Singularity/Apptainer images for the PINN cases (which ran in a remote cluster). 
