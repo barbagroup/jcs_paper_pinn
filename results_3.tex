@@ -14,6 +14,7 @@ The hardware used and the configurations of the linear solvers were the same as 
 
 As for the PINN solvers, in addition to the steady and unsteady solvers, a third PINN solver was used: a data-driven PINN.
 The data-driven PINN solver is the same as the unsteady PINN solver but replaces the three initial condition losses ($L_4$ to $L_6$) with:
+
 \begin{equation}\label{eq:data-driven-loss}
     \left\{
         \begin{array}{l}
@@ -161,11 +162,11 @@ We also present the flow contours from the steady PINN in figure \ref{fig:cylind
     \label{fig:cylinder-re200-pinn-contours-omega_z}%
 \end{figure*}
 
-\begin{figure}
+\begin{figure}[t]
     \centering%
     \includegraphics[width=0.95\columnwidth]{cylinder-2d-re200/contour-comparison-steady}%
     \caption{%
-        Contours of 2D cylinder flow at $Re=\num{200}$ w/ steady PINN
+        Contours of 2D cylinder flow at $Re=\num{200}$ w/ steady PINN.
     }
     \label{fig:cylinder-re200-steady-pinn-contours}%
 \end{figure}

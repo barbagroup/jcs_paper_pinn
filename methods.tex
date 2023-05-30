@@ -45,6 +45,7 @@ When using physics-informed neural networks, PINNs, we approximate the solutions
 \end{equation}
 where $\theta$ represents a set of free model parameters we need to determine later.
 A common choice of $G$ is an MLP (multilayer perceptron) network, which can be represented as follows:
+
 \begin{gather}\label{eq:mlp-formula}
     \vec{h}^0 \equiv \begin{bmatrix} x & y & t \end{bmatrix}^\mathsf{T} \\
     \vec{h}^k =
