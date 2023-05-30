@@ -6,8 +6,7 @@ In traditional numerical simulations, however, the shedding is triggered by vari
 These numerical noises mimic natural perturbations.
 Therefore, a steady solution could be physically valid for cylinder flow at $Re = 200$ in a perfect world with no numerical noise.
 As PINNs are also subject to numerical noise, we expected to observe vortex shedding in the simulations, but the results show that instead the data-free unsteady PINN converged to a steady-state solution.
-Even the data-driven PINN reverted to a steady-state solution beyond the timeframe that was fed with PetIBM's data.
-
+Even the data-driven PINN reverted back to a steady-state solution beyond the timeframe that was fed with PetIBM's data.
 It is unlikely that the steady-state behavior has to do with perturbations.
 In traditional numerical simulations, it is often challenging to induce vortex shedding, particularly in symmetrical computational domains.
 However, we can still trigger shedding by incorporating non-uniform initial conditions, which serve as perturbations to the steady state solution.
