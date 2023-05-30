@@ -83,6 +83,16 @@ We consider the results of $C_D$ validated for the PINN solvers and PetIBM.
     \label{fig:cylinder-re40-pinn-surfp}%
 \end{figure}
 
+
+\begin{figure*}
+    \centering%
+    \includegraphics{cylinder-2d-re40/contour-comparison}%
+    \caption{%
+        Contour plots for 2D cylinder flow at $Re=\num{40}$
+    }
+    \label{fig:cylinder-re40-contours}%
+\end{figure*}
+
 Figure \ref{fig:cylinder-re40-pinn-surfp} shows the pressure distribution on the cylinder surface.
 Again, though there is not a single solution that all works agree upon, the results from PetIBM and the PINN solvers visually agree with the published literature.
 We consider PetIBM and both PINN solvers validated.
@@ -126,13 +136,5 @@ PetIBM used central difference to calculate the vorticity, while the PINN solver
 \end{table}%
 
 
-\begin{figure*}
-    \centering%
-    \includegraphics{cylinder-2d-re40/contour-comparison}%
-    \caption{%
-        Contour plots for 2D cylinder flow at $Re=\num{40}$
-    }
-    \label{fig:cylinder-re40-contours}%
-\end{figure*}
 
 % vim:ft=tex:
