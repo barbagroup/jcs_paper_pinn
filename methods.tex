@@ -68,13 +68,13 @@ Throughout this work, we use $\sigma_0 = \cdots = \sigma_\ell = \sigma(\vec{z}) 
 The parameters $\ell$, $N_k$, and the choices of $\sigma_k$ together control the model complexity of the PINNs that use MLP networks.
 
 As with all other numerical methods for PDEs, the calculations of spatial and temporal derivatives of velocity and pressure play a crucial role.
-While a numerical approximation (e.g., finite difference) may be a more robust choice---as seen in early-day literature on neural networks for differential equaitons \cite{dissanayake_neural-network-based_1994,lagaris_artificial_1998}---, it is common to see the use of automatic differentiation nowadays.
+While a numerical approximation (e.g., finite difference) may be a more robust choice---as seen in early-day literature on neural networks for differential equations \cite{dissanayake_neural-network-based_1994,lagaris_artificial_1998}---, it is common to see the use of automatic differentiation nowadays.
 Automatic differentiation is a general technique to find derivatives of a function by decomposing it into elementary functions with a known derivative, and then applying the chain rule of calculus to get exact derivative of the more complex function.
 Note that the word {\it exact} here refers to being exact in terms of the model $G$, rather than to the true solution of the Navier-Stokes equations. 
 A detailed review of automatic differentiation can be found in reference \cite{griewank_automatic_1988}.
 Major deep learning programming libraries, such as TensorFlow and PyTorch, offer the user automatic differentiation features.
 
-Once we have obrained derivatives, we are able to calculate residuals, also called losses in the terminology of machine learning.
+Once we have obtained derivatives, we are able to calculate residuals, also called losses in the terminology of machine learning.
 As shown in figure \ref{fig:pinn-workflow}, given a spatial-temporal coordinate $(x, y, t)$, we can calculate up to \num{10} loss terms, depending on where in the domain this spatial-temporal point is located. 
 Figure \ref{fig:pinn-workflow} is only shown as an illustration of the PINN methodology using the solution workflow specifically for the Navier-Stokes equations \eqref{eq:orig-ns}.
 The number and definitions of loss terms may change, for example, when we have some boundary segments with Robin conditions or when we are solving 3D problems.
