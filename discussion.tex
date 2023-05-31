@@ -13,6 +13,8 @@ However, we can still trigger shedding by incorporating non-uniform initial cond
 In the data-driven PINN, the training data from PetIBM can be considered as such non-uniform initial conditions.
 The vortex shedding already exists in the training data, yet it did not continue beyond that point, indicating that the perturbation is not the primary factor responsible for the steady-state behavior.
 This suggests that PINNs have a different reason for their inability to generate vortex shedding compared to traditional CFD solvers.
+Other results in the literature that show the two-dimensional cylinder wake \cite{jin_nsfnets_2021} in fact are using high-fidelity DNS data to provide boundary and initial data for the PINN model.
+
 
 The steady-state behavior of the PINN solutions may be attributed to spectral bias.
 Rahaman et al. \cite{rahaman_spectral_2019} showed that neural networks exhibit spectral bias, meaning they tend to prioritize learning low-frequency patterns in the training data.
