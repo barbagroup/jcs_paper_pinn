@@ -18,8 +18,8 @@ The failure to capture vortex shedding in the data-free mode of PINN was confirm
 
 The steady-state behavior of the PINN solutions may be attributed to spectral bias.
 Rahaman et al. \cite{rahaman_spectral_2019} showed that neural networks exhibit spectral bias, meaning they tend to prioritize learning low-frequency patterns in the training data.
-In the case of cylinder flow, the lowest frequency correspoinds to Strouhal number $St=0$.
-It is possible that the data-free unsteady PINN prioritized learning the mode at $St=0$ (i.e., the steady mode) from the Navier-Stokes equations.
+For cylinder flow, the lowest frequency corresponds to Strouhal number $St=0$.
+The data-free unsteady PINN may be prioritizing learning the mode at $St=0$ (i.e., the steady mode) from the Navier-Stokes equations.
 The same may apply to the data-driven PINN beyond the timeframe with training data from PetIBM, resulting in a rapid restoration to the non-oscillating solution.
 Even within the timeframe with the PetIBM training data, the data-driven PINN may prioritize learning the $St=0$ mode in PetIBM's data.
 Although the vortex shedding in PetIBM's data forces the PINN to learn higher-frequency modes to some extent, the shedding modes are generally more difficult to learn due to the spectral bias.
@@ -55,5 +55,20 @@ It is worth noting that Cai et al. \cite{cai_physics-informed_2021} argue that d
 In such cases, data-driven PINNs may outperform traditional deep learning approaches, which typically require more data for training.
 However, as we discussed in our previous work \cite{chuang_experience_2022}, using PDEs as loss functions is computationally expensive, increasing the overall computational graph exponentially.
 Thus, even in the context of interpolation problems under sparse observation data, the research question of how much additional accuracy can be gained at what cost in computational expense remains an open and interesting question.
+
+Other works have brought up concerns about the limitations of PINN methods in certain scenarios, like flows with shocks \cite{fuks_limitations_2020} and flows with fast variations \cite{krishnapriyan_failure_2021}.
+These researchers suggested that the optimization process on the complex landscape of the loss function may be the cause of the failure.
+And other works have also highlighted the performance penalty of PINNs compared to traditional numerical methods \cite{grossmann_pinnvsfem_2023}.
+In comparison with finite element methods, PINNs were found to be orders of magnitude slower in terms of wall-clock time.
+We also observed a similar performance penalty in our case study, where the PINN method took orders of magnitude longer to train than the traditional CFD solver.
+We purposely used a very old GPU (NVIDIA Tesla K40) with PetIBM, running on our lab-assembled workstation, while the PINN method was run on a modern GPU (NVIDIA Tesla A100) on a high-performance computing cluster.
+However, we did not conduct a thorough performance comparison.
+It is unclear what a ``fair'' performance comparison would look like, as the factors affecting runtime are so different between the two methods.
+
+An interesting third option was proposed recently, where the discretized form of the differential equations is used in the loss function, rather than the differential equations themselves \cite{karnakov_odil_2022}.
+This approach foregoes the neural-network representation altogether, as the unknowns are the solution values themselves on a discretization grid. 
+It shares with PINNs the features of solving a gradient-based optimization problem, taking advantae of automatic differentiation, and being easily implemented in a few lines of code thanks to modern ML frameworks. 
+But it does not suffer from the performance penalty of PINNs, showing an advantage of several orders of magnitude in terms of wall-clock time.
+Given that this approach uses a completely different loss function, it supports the claims of other researchers that the loss-function landscape is the source of problems for PINNs.
 
 % vim:ft=tex
