@@ -8,17 +8,17 @@ Therefore, a steady solution could be physically valid for cylinder flow at $Re 
 As PINNs are also subject to numerical noise, we expected to observe vortex shedding in the simulations, but the results show that instead the data-free unsteady PINN converged to a steady-state solution.
 Even the data-driven PINN reverted back to a steady-state solution beyond the timeframe that was fed with PetIBM's data.
 It is unlikely that the steady-state behavior has to do with perturbations.
-In traditional numerical simulations, it is often challenging to induce vortex shedding, particularly in symmetrical computational domains.
+In traditional numerical simulations, it is sometimes challenging to induce vortex shedding, particularly in symmetrical computational domains.
 However, we can still trigger shedding by incorporating non-uniform initial conditions, which serve as perturbations to the steady state solution.
 In the data-driven PINN, the training data from PetIBM can be considered as such non-uniform initial conditions.
-The vortex shedding already exists in the training data, yet it did not continue beyond that point, indicating that the perturbation is not the primary factor responsible for the steady-state behavior.
+The vortex shedding already exists in the training data, yet it did not continue beyond the period of data input, indicating that the perturbation is not the primary factor responsible for the steady-state behavior.
 This suggests that PINNs have a different reason for their inability to generate vortex shedding compared to traditional CFD solvers.
 Other results in the literature that show the two-dimensional cylinder wake \cite{jin_nsfnets_2021} in fact are using high-fidelity DNS data to provide boundary and initial data for the PINN model.
 The failure to capture vortex shedding in the data-free mode of PINN was confirmed in recent work by Rohrhofer et al. \cite{rohrhofer_fixedpoints_2023}.
 
 The steady-state behavior of the PINN solutions may be attributed to spectral bias.
 Rahaman et al. \cite{rahaman_spectral_2019} showed that neural networks exhibit spectral bias, meaning they tend to prioritize learning low-frequency patterns in the training data.
-In the case of cylinder flow, the lowest frequency is $St=0$.
+In the case of cylinder flow, the lowest frequency correspoinds to Strouhal number $St=0$.
 It is possible that the data-free unsteady PINN prioritized learning the mode at $St=0$ (i.e., the steady mode) from the Navier-Stokes equations.
 The same may apply to the data-driven PINN beyond the timeframe with training data from PetIBM, resulting in a rapid restoration to the non-oscillating solution.
 Even within the timeframe with the PetIBM training data, the data-driven PINN may prioritize learning the $St=0$ mode in PetIBM's data.
@@ -31,7 +31,7 @@ The Koopman analysis results are consistent with the existence of spectral bias:
 The Koopman analysis on the data-driven PINN's prediction reveals many additional frequencies that do not exist in the training data from PetIBM, and many damped modes that have a damping effect and reduce or prohibit oscillation.
 These damped modes may be the cause of the solution restoring to a steady-state flow beyond the timeframe with PetIBM's data.
 
-From a numerical-method perspective, the Koopman analysis shows that the PINNs in our work are dissipative and dispersive.
+From a numerical-method perspective, the Koopman analysis shows that the PINN methods in our work are dissipative and dispersive.
 The Q-criterion result (figure \ref{fig:cylinder-re200-pinn-qcriterion}) also demonstrates dissipative behavior, which inhibits oscillation and instabilities.
 Dispersion can also contribute to the reduction of oscillation strength.
 However, it is unclear whether dispersion and dissipation are intrinsic numerical properties or whether we did not train the PINNs sufficiently, even though the aggregated loss had converged (figure \ref{fig:cylinder-re200-pinn-loss}).
@@ -39,13 +39,13 @@ Unfortunately, limited computing resources prevented us from continuing the trai
 More theoretical work may be necessary to study the intrinsic numerical properties of PINNs beyond computational experiments.
 
 Another point worth discussing is the generalizability of data-driven PINNs.
-Our case study demonstrates that data-driven PINNs may not perform well when predicting data they have not seen during training, as illustrated by the meaningless predictions generated for $t = 10$ and $t = 50$ in figures \ref{fig:cylinder-re200-pinn-contours-u}, \ref{fig:cylinder-re200-pinn-contours-v}, \ref{fig:cylinder-re200-pinn-contours-p}, and \ref{fig:cylinder-re200-pinn-contours-omega_z}.
+Our case study demonstrates that data-driven PINNs may not perform well when predicting data they have not seen during training, as illustrated by the unphysical predictions generated for $t = 10$ and $t = 50$ in figures \ref{fig:cylinder-re200-pinn-contours-u}, \ref{fig:cylinder-re200-pinn-contours-v}, \ref{fig:cylinder-re200-pinn-contours-p}, and \ref{fig:cylinder-re200-pinn-contours-omega_z}.
 While data-driven PINNs are believed to have the advantage of performing extrapolation in a meaningful way by leveraging existing data and physical laws, our results suggest that this ``extrapolation'' capability may be limited.
 In data-driven approaches, the training data typically consists of observation data (e.g., experimental or simulation data) and pure spatial-temporal points.
 The ``extrapolation'' capability is therefore constrained to the coordinates seen during training, rather than arbitrary coordinates beyond the observation data.
 
-For example, in our case study, $t \in [0, 125]$ corresponds to spatial-temporal points that were never seen during training, $t \in [125, 140]$ represents observation data, and $t \in [140, 200]$ corresponds to spatial-temporal points seen during training but without observation data.
-The PINN's prediction for $t \in [125, 140]$ is considered interpolation.
+For example, in our case study, $t \in [0, 125]$ corresponds to spatial-temporal points that were never seen during training, $t \in [125, 140]$ contains observation data, and $t \in [140, 200]$ corresponds to spatial-temporal points seen during training but without observation data.
+The PINN method's prediction for $t \in [125, 140]$ is considered interpolation.
 Even if we accept the steady-state solution as physically valid, then the data-driven PINN can only extrapolate for $t \in [140, 200]$, and fails to extrapolate for $t \in [0, 125]$.
 This limitation means that the PINN method can only extrapolate on coordinates it has seen during training.
 If the steady-state solution is deemed unacceptable, then the data-driven PINN lacks extrapolation capability altogether and is limited to interpolation.
@@ -53,7 +53,7 @@ This raises the interesting research question of how data-driven PINNs compare t
 
 It is worth noting that Cai et al. \cite{cai_physics-informed_2021} argue that data-driven PINNs are useful in scenarios where only sparse observation data are available, such as when an experiment only measures flow properties at a few locations, or when a simulation only saves transient data at a coarse-grid level in space and time.
 In such cases, data-driven PINNs may outperform traditional deep learning approaches, which typically require more data for training.
-However, as we discussed in our previous work \cite{chuang_experience_2022}, using PDEs as loss functions can be computationally expensive, increasing the overall computational graph exponentially.
+However, as we discussed in our previous work \cite{chuang_experience_2022}, using PDEs as loss functions is computationally expensive, increasing the overall computational graph exponentially.
 Thus, even in the context of interpolation problems under sparse observation data, the research question of how much additional accuracy can be gained at what cost in computational expense remains an open and interesting question.
 
 % vim:ft=tex
