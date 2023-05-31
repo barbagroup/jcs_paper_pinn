@@ -17,6 +17,7 @@ arXiv preprint: Coming soon
     - [Documentation](https://barbagroup.github.io/PetIBM/)
 - "NVIDIA Modulus: a Neural Network Framework," https://developer.nvidia.com/modulus (Apache 2.0 license)
     - [Documentation](https://docs.nvidia.com/deeplearning/modulus/modulus-core/index.html)
+- Our PINN solvers using the Modulus toolkit can be found in the `repro-pack` submodule (BSD-3 license)
 
 ## LICENSE
 
