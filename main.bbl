@@ -1,0 +1,231 @@
+\begin{thebibliography}{10}
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\href#1#2{#2} \def\path#1{#1}\fi
+
+\bibitem{dissanayake_neural-network-based_1994}
+M.~W. M.~G. Dissanayake, N.~Phan-Thien,
+  \href{https://onlinelibrary.wiley.com/doi/10.1002/cnm.1640100303}{Neural-network-based
+  approximations for solving partial differential equations}, Communications in
+  Numerical Methods in Engineering 10~(3) (1994) 195--201.
+\newblock \href {http://dx.doi.org/10.1002/cnm.1640100303}
+  {\path{doi:10.1002/cnm.1640100303}}.
+\newline\urlprefix\url{https://onlinelibrary.wiley.com/doi/10.1002/cnm.1640100303}
+
+\bibitem{lagaris_artificial_1998}
+I.~E. Lagaris, A.~Likas, D.~I. Fotiadis,
+  \href{http://ieeexplore.ieee.org/document/712178/}{Artificial neural networks
+  for solving ordinary and partial differential equations}, {IEEE} Transactions
+  on Neural Networks 9~(5) (1998) 987--1000.
+\newblock \href {http://arxiv.org/abs/physics/9705023}
+  {\path{arXiv:physics/9705023}}, \href {http://dx.doi.org/10.1109/72.712178}
+  {\path{doi:10.1109/72.712178}}.
+\newline\urlprefix\url{http://ieeexplore.ieee.org/document/712178/}
+
+\bibitem{vinuesa_emerging_2022}
+R.~Vinuesa, S.~L. Brunton,
+  \href{https://doi.org/10.1109/MCSE.2023.3264340}{Emerging trends in machine
+  learning for computational fluid dynamics}, Computing in Science \&
+  Engineering 24~(5) (2022) 33--41.
+\newblock \href {http://dx.doi.org/10.1109/MCSE.2023.3264340}
+  {\path{doi:10.1109/MCSE.2023.3264340}}.
+\newline\urlprefix\url{https://doi.org/10.1109/MCSE.2023.3264340}
+
+\bibitem{chuang_experience_2022}
+P.-Y. Chuang, L.~Barba,
+  \href{https://conference.scipy.org/proceedings/scipy2022/PiYueh_Chuang.html}{Experience
+  report of physics-informed neural networks in fluid simulations: pitfalls and
+  frustration}, Austin, Texas, 2022, pp. 28--36.
+\newblock \href {http://dx.doi.org/10.25080/majora-212e5952-005}
+  {\path{doi:10.25080/majora-212e5952-005}}.
+\newline\urlprefix\url{https://conference.scipy.org/proceedings/scipy2022/PiYueh_Chuang.html}
+
+\bibitem{krishnapriyan_failure_2021}
+A.~Krishnapriyan, A.~Gholami, S.~Zhe, R.~Kirby, M.~W. Mahoney,
+  \href{https://openreview.net/forum?id=a2Gr9gNFD-J}{Characterizing possible
+  failure modes in physics-informed neural networks}, in: A.~Beygelzimer,
+  Y.~Dauphin, P.~Liang, J.~W. Vaughan (Eds.), Advances in Neural Information
+  Processing Systems, 2021.
+\newline\urlprefix\url{https://openreview.net/forum?id=a2Gr9gNFD-J}
+
+\bibitem{fuks_limitations_2020}
+O.~Fuks, H.~A. Tchelepi, Limitations of physics informed machine learning for
+  nonlinear two-phase transport in porous media, Journal of Machine Learning
+  for Modeling and Computing 1~(1) (2020) 19--37.
+\newblock \href {http://dx.doi.org/10.1615/JMachLearnModelComput.2020033905}
+  {\path{doi:10.1615/JMachLearnModelComput.2020033905}}.
+
+\bibitem{rohrhofer_fixedpoints_2023}
+F.~M. Rohrhofer, S.~Posch, C.~G{\"o}{\ss}nitzer, B.~C. Geiger,
+  \href{https://openreview.net/forum?id=56cTmVrg5w}{On the role of fixed points
+  of dynamical systems in training physics-informed neural networks},
+  Transactions on Machine Learning Research.
+\newline\urlprefix\url{https://openreview.net/forum?id=56cTmVrg5w}
+
+\bibitem{chuang_petibm_2018}
+P.-Y. Chuang, O.~Mesnard, A.~Krishnan, L.~A. Barba,
+  \href{https://doi.org/10.21105/joss.00558}{{PetIBM}: toolbox and applications
+  of the immersed-boundary method on distributed-memory architectures}, J. Open
+  Source Software 3~(25) (2018) 558.
+\newblock \href {http://dx.doi.org/10.21105/joss.00558}
+  {\path{doi:10.21105/joss.00558}}.
+\newline\urlprefix\url{https://doi.org/10.21105/joss.00558}
+
+\bibitem{griewank_automatic_1988}
+A.~Griewank, On automatic differentiation, in: Mathematical Programming: Recent
+  Developments and Applications, Vol.~6 of Mathematics and its Applications,
+  Springer Netherlands, pp. 83--107.
+
+\bibitem{cai_physics-informed_2021}
+S.~Cai, Z.~Mao, Z.~Wang, M.~Yin, G.~E. Karniadakis,
+  \href{https://link.springer.com/10.1007/s10409-021-01148-1}{Physics-informed
+  neural networks ({PINNs}) for fluid mechanics: a review} 37~(12)  1727--1738.
+\newblock \href {http://dx.doi.org/10.1007/s10409-021-01148-1}
+  {\path{doi:10.1007/s10409-021-01148-1}}.
+\newline\urlprefix\url{https://link.springer.com/10.1007/s10409-021-01148-1}
+
+\bibitem{rosetti_urans_2012}
+G.~F. Rosetti, G.~Vaz, A.~L.~C. Fujarra,
+  \href{https://asmedigitalcollection.asme.org/fluidsengineering/article/doi/10.1115/1.4007571/372953/URANS-Calculations-for-Smooth-Circular-Cylinder}{{URANS}
+  {Calculations} for {Smooth} {Circular} {Cylinder} {Flow} in a {Wide} {Range}
+  of {Reynolds} {Numbers}: {Solution} {Verification} and {Validation}}, Journal
+  of Fluids Engineering 134~(12) (2012) 121103.
+\newblock \href {http://dx.doi.org/10.1115/1.4007571}
+  {\path{doi:10.1115/1.4007571}}.
+\newline\urlprefix\url{https://asmedigitalcollection.asme.org/fluidsengineering/article/doi/10.1115/1.4007571/372953/URANS-Calculations-for-Smooth-Circular-Cylinder}
+
+\bibitem{sen_steady_2009}
+S.~Sen, S.~Mittal, G.~Biswas,
+  \href{https://www.cambridge.org/core/product/identifier/S0022112008004904/type/journal_article}{Steady
+  separated flow past a circular cylinder at low {Reynolds} numbers}, Journal
+  of Fluid Mechanics 620 (2009) 89--119.
+\newblock \href {http://dx.doi.org/10.1017/S0022112008004904}
+  {\path{doi:10.1017/S0022112008004904}}.
+\newline\urlprefix\url{https://www.cambridge.org/core/product/identifier/S0022112008004904/type/journal_article}
+
+\bibitem{park_numerical_1998}
+J.~Park, K.~Kwon, H.~Choi,
+  \href{http://link.springer.com/10.1007/BF02942594}{Numerical solutions of
+  flow past a circular cylinder at {Reynolds} numbers up to 160}, KSME
+  International Journal 12~(6) (1998) 1200--1205.
+\newblock \href {http://dx.doi.org/10.1007/BF02942594}
+  {\path{doi:10.1007/BF02942594}}.
+\newline\urlprefix\url{http://link.springer.com/10.1007/BF02942594}
+
+\bibitem{tritton_experiments_1959}
+D.~J. Tritton,
+  \href{https://www.cambridge.org/core/product/identifier/S0022112059000829/type/journal_article}{Experiments
+  on the flow past a circular cylinder at low {Reynolds} numbers}, Journal of
+  Fluid Mechanics 6~(4) (1959) 547--567.
+\newblock \href {http://dx.doi.org/10.1017/S0022112059000829}
+  {\path{doi:10.1017/S0022112059000829}}.
+\newline\urlprefix\url{https://www.cambridge.org/core/product/identifier/S0022112059000829/type/journal_article}
+
+\bibitem{grove_experimental_1964}
+A.~S. Grove, F.~H. Shair, E.~E. Petersen,
+  \href{https://www.cambridge.org/core/product/identifier/S0022112064000544/type/journal_article}{An
+  experimental investigation of the steady separated flow past a circular
+  cylinder}, Journal of Fluid Mechanics 19~(1) (1964) 60--80.
+\newblock \href {http://dx.doi.org/10.1017/S0022112064000544}
+  {\path{doi:10.1017/S0022112064000544}}.
+\newline\urlprefix\url{https://www.cambridge.org/core/product/identifier/S0022112064000544/type/journal_article}
+
+\bibitem{deng_hydrodynamic_2007}
+J.~Deng, X.-M. Shao, Z.-S. Yu,
+  \href{http://aip.scitation.org/doi/10.1063/1.2814259}{Hydrodynamic studies on
+  two traveling wavy foils in tandem arrangement}, Physics of Fluids 19~(11)
+  (2007) 113104.
+\newblock \href {http://dx.doi.org/10.1063/1.2814259}
+  {\path{doi:10.1063/1.2814259}}.
+\newline\urlprefix\url{http://aip.scitation.org/doi/10.1063/1.2814259}
+
+\bibitem{Rajani2009}
+B.~Rajani, A.~Kandasamy, S.~Majumdar,
+  \href{http://dx.doi.org/10.1016/j.apm.2008.01.017}{Numerical simulation of
+  laminar flow past a circular cylinder}, Applied Mathematical Modelling 33~(3)
+  (2009) 1228--1247, arXiv: DOI: 10.1002/fld.1 Publisher: Elsevier Inc. ISBN:
+  02712091 10970363.
+\newblock \href {http://dx.doi.org/10.1016/j.apm.2008.01.017}
+  {\path{doi:10.1016/j.apm.2008.01.017}}.
+\newline\urlprefix\url{http://dx.doi.org/10.1016/j.apm.2008.01.017}
+
+\bibitem{gushchin_numerical_1974}
+V.~Gushchin, V.~Shchennikov,
+  \href{https://linkinghub.elsevier.com/retrieve/pii/0041555374900615}{A
+  numerical method of solving the navier-stokes equations}, USSR Computational
+  Mathematics and Mathematical Physics 14~(2) (1974) 242--250.
+\newblock \href {http://dx.doi.org/10.1016/0041-5553(74)90061-5}
+  {\path{doi:10.1016/0041-5553(74)90061-5}}.
+\newline\urlprefix\url{https://linkinghub.elsevier.com/retrieve/pii/0041555374900615}
+
+\bibitem{fornberg_numerical_1980}
+B.~Fornberg,
+  \href{http://www.journals.cambridge.org/abstract_S0022112080000419}{A
+  numerical study of steady viscous flow past a circular cylinder}, Journal of
+  Fluid Mechanics 98~(04) (1980) 819.
+\newblock \href {http://dx.doi.org/10.1017/S0022112080000419}
+  {\path{doi:10.1017/S0022112080000419}}.
+\newline\urlprefix\url{http://www.journals.cambridge.org/abstract_S0022112080000419}
+
+\bibitem{jeong_identification_1995}
+J.~Jeong, F.~Hussain, On the identification of a vortex, Journal of Fluid
+  Mechanics 285 (1995) 69--94.
+\newblock \href {http://dx.doi.org/10.1017/S0022112095000462}
+  {\path{doi:10.1017/S0022112095000462}}.
+
+\bibitem{chen_variants_2012}
+K.~K. Chen, J.~H. Tu, C.~W. Rowley,
+  \href{http://link.springer.com/10.1007/s00332-012-9130-9}{Variants of
+  {Dynamic} {Mode} {Decomposition}: {Boundary} {Condition}, {Koopman}, and
+  {Fourier} {Analyses}}, Journal of Nonlinear Science 22~(6) (2012) 887--915.
+\newblock \href {http://dx.doi.org/10.1007/s00332-012-9130-9}
+  {\path{doi:10.1007/s00332-012-9130-9}}.
+\newline\urlprefix\url{http://link.springer.com/10.1007/s00332-012-9130-9}
+
+\bibitem{rowley_spectral_2009}
+C.~W. Rowley, I.~Mezi{\'c}, S.~Bagheri, P.~Schlatter, D.~S. Henningson,
+  \href{https://www.cambridge.org/core/product/identifier/S0022112009992059/type/journal_article}{Spectral
+  analysis of nonlinear flows}, Journal of Fluid Mechanics 641 (2009) 115--127.
+\newblock \href {http://dx.doi.org/10.1017/S0022112009992059}
+  {\path{doi:10.1017/S0022112009992059}}.
+\newline\urlprefix\url{https://www.cambridge.org/core/product/identifier/S0022112009992059/type/journal_article}
+
+\bibitem{jin_nsfnets_2021}
+X.~Jin, S.~Cai, H.~Li, G.~E. Karniadakis,
+  \href{https://doi.org/10.1016/j.jcp.2020.109951}{{NSFnets} ({Navier-Stokes}
+  flow nets): Physics-informed neural networks for the incompressible
+  navier-stokes equations}, Journal of Computational Physics 426 (2021) 109951.
+\newblock \href {http://dx.doi.org/10.1016/j.jcp.2020.109951}
+  {\path{doi:10.1016/j.jcp.2020.109951}}.
+\newline\urlprefix\url{https://doi.org/10.1016/j.jcp.2020.109951}
+
+\bibitem{rahaman_spectral_2019}
+N.~Rahaman, A.~Baratin, D.~Arpit, F.~Draxler, M.~Lin, F.~Hamprecht, Y.~Bengio,
+  A.~Courville, \href{https://proceedings.mlr.press/v97/rahaman19a.html}{On the
+  {Spectral} {Bias} of {Neural} {Networks}}, in: K.~Chaudhuri, R.~Salakhutdinov
+  (Eds.), Proceedings of the 36th {International} {Conference} on {Machine}
+  {Learning}, Vol.~97 of Proceedings of {Machine} {Learning} {Research}, PMLR,
+  2019, pp. 5301--5310.
+\newline\urlprefix\url{https://proceedings.mlr.press/v97/rahaman19a.html}
+
+\bibitem{grossmann_pinnvsfem_2023}
+T.~G. Grossmann, U.~J. Komorowska, J.~Latz, C.-B. Sch{\"o}nlieb,
+  \href{https://arxiv.org/abs/2302.04107}{an physics-informed neural networks
+  beat the finite element method?}, arXiv preprint arXiv:2302.04107 (2023).
+\newline\urlprefix\url{https://arxiv.org/abs/2302.04107}
+
+\bibitem{karnakov_odil_2022}
+P.~Karnakov, S.~Litvinov, P.~Koumoutsakos,
+  \href{https://arxiv.org/abs/2205.04611}{{Optimizing a DIscrete Loss (ODIL})
+  to solve forward and inverse problems for partial differential equations
+  using machine learning tools}, arXiv preprint arXiv:2205.04611 (2022).
+\newline\urlprefix\url{https://arxiv.org/abs/2205.04611}
+
+\bibitem{chuang_thesis_2023}
+P.-Y. Chuang, Feasibility study of physics-informed neural network modeling in
+  computational fluid dynamics, Ph.D. thesis, The George Washington University
+  (2023).
+
+\end{thebibliography}
