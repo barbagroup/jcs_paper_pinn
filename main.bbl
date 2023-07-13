@@ -169,6 +169,12 @@ B.~Fornberg,
   {\path{doi:10.1017/S0022112080000419}}.
 \newline\urlprefix\url{http://www.journals.cambridge.org/abstract_S0022112080000419}
 
+\bibitem{chuang_barba_2023_fig12}
+P.-Y. Chuang, L.~A. Barba, Predictive limitations of physics-informed neural
+  networks in vortex shedding: {Figure 12}, Figshare (2023).
+\newblock \href {http://dx.doi.org/10.6084/m9.figshare.23680983}
+  {\path{doi:10.6084/m9.figshare.23680983}}.
+
 \bibitem{jeong_identification_1995}
 J.~Jeong, F.~Hussain, On the identification of a vortex, Journal of Fluid
   Mechanics 285 (1995) 69--94.
@@ -191,6 +197,12 @@ C.~W. Rowley, I.~Mezi{\'c}, S.~Bagheri, P.~Schlatter, D.~S. Henningson,
 \newblock \href {http://dx.doi.org/10.1017/S0022112009992059}
   {\path{doi:10.1017/S0022112009992059}}.
 \newline\urlprefix\url{https://www.cambridge.org/core/product/identifier/S0022112009992059/type/journal_article}
+
+\bibitem{chuang_barba_2023_fig19}
+P.-Y. Chuang, L.~A. Barba, Predictive limitations of physics-informed neural
+  networks in vortex shedding: {Figure 19}, Figshare (2023).
+\newblock \href {http://dx.doi.org/10.6084/m9.figshare.23681085}
+  {\path{doi:10.6084/m9.figshare.23681085}}.
 
 \bibitem{jin_nsfnets_2021}
 X.~Jin, S.~Cai, H.~Li, G.~E. Karniadakis,
