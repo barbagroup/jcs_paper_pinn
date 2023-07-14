@@ -37,7 +37,8 @@ R.~Vinuesa, S.~L. Brunton,
 P.-Y. Chuang, L.~Barba,
   \href{https://conference.scipy.org/proceedings/scipy2022/PiYueh_Chuang.html}{Experience
   report of physics-informed neural networks in fluid simulations: pitfalls and
-  frustration}, Austin, Texas, 2022, pp. 28--36.
+  frustration}, in: Proceedings of the 21st {Python} in {Science} {Conference},
+  Austin, Texas, 2022, pp. 28--36.
 \newblock \href {http://dx.doi.org/10.25080/majora-212e5952-005}
   {\path{doi:10.25080/majora-212e5952-005}}.
 \newline\urlprefix\url{https://conference.scipy.org/proceedings/scipy2022/PiYueh_Chuang.html}
@@ -47,7 +48,7 @@ A.~Krishnapriyan, A.~Gholami, S.~Zhe, R.~Kirby, M.~W. Mahoney,
   \href{https://openreview.net/forum?id=a2Gr9gNFD-J}{Characterizing possible
   failure modes in physics-informed neural networks}, in: A.~Beygelzimer,
   Y.~Dauphin, P.~Liang, J.~W. Vaughan (Eds.), Advances in Neural Information
-  Processing Systems, 2021.
+  Processing Systems, 2021, pp. 1--13.
 \newline\urlprefix\url{https://openreview.net/forum?id=a2Gr9gNFD-J}
 
 \bibitem{fuks_limitations_2020}
@@ -76,12 +77,13 @@ P.-Y. Chuang, O.~Mesnard, A.~Krishnan, L.~A. Barba,
 \bibitem{griewank_automatic_1988}
 A.~Griewank, On automatic differentiation, in: Mathematical Programming: Recent
   Developments and Applications, Vol.~6 of Mathematics and its Applications,
-  Springer Netherlands, pp. 83--107.
+  Springer Netherlands, 1988, pp. 83--107.
 
 \bibitem{cai_physics-informed_2021}
 S.~Cai, Z.~Mao, Z.~Wang, M.~Yin, G.~E. Karniadakis,
   \href{https://link.springer.com/10.1007/s10409-021-01148-1}{Physics-informed
-  neural networks ({PINNs}) for fluid mechanics: a review} 37~(12)  1727--1738.
+  neural networks ({PINNs}) for fluid mechanics: a review}, Acta Mechanica
+  Sinica 37~(12) (2021) 1727--1738.
 \newblock \href {http://dx.doi.org/10.1007/s10409-021-01148-1}
   {\path{doi:10.1007/s10409-021-01148-1}}.
 \newline\urlprefix\url{https://link.springer.com/10.1007/s10409-021-01148-1}
