@@ -13,6 +13,7 @@ The PetIBM simulation was done with a grid resolution of $1485$ $\times$ $720$ a
 The hardware used and the configurations of the linear solvers were the same as described in section \ref{sec:val_2d_cylinder_re40}.
 
 As for the PINN solvers, in addition to the steady and unsteady solvers, a third PINN solver was used: a data-driven PINN.
+In this case, the PINN solver receives data from a PetIBM simulation that includes fully developed vortex shedding, with the aim of testing the ability of PINN to keep generating vortices.
 The data-driven PINN solver is the same as the unsteady PINN solver but replaces the three initial condition losses ($L_4$ to $L_6$) with:
 
 \begin{equation}\label{eq:data-driven-loss}
@@ -29,9 +30,9 @@ The data-driven PINN solver is the same as the unsteady PINN solver but replaces
         t \in T_{data}
     \end{array}
 \end{equation}
-where subscript $data$ denotes data from a PetIBM simulation.
-$T_{data}$ denotes the time range for which we feed the PetIBM simulation data to the data-driven PINN solver.
-In this case, $T_{data} \equiv \left[125, 140\right]$.
+where the subscript $data$ denotes data from a PetIBM simulation.
+$T_{data}$ denotes the time range for which PetIBM simulation data is fed to the data-driven PINN solver.
+In the range $T_{data} \equiv \left[125, 140\right]$ the flow has achieved fully developed vortex shedding, and the data-driven PINN solver should keep generating vortices.
 The PetIBM simulation outputted transient snapshots every 1 second in simulation time, hence the data fed to the data-driven PINN solver consisted of 16 snapshots.
 These snapshots contain around $3$ full periods of vortex shedding.
 The total number of spatial-temporal points in these snapshots is around $\num{17000000}$, and we only used $\num{6400}$ every iteration, meaning each data batch was repeated approximately every $\num{2650}$ iterations.
