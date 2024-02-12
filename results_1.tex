@@ -105,13 +105,16 @@ Note that the PINN solver used single-precision floats, which is the default in 
 
 After training, we evaluated the PINN solver's errors at cell centers in a $512$ $\times$ $512$ Cartesian grid and at $t=0$, $2$, $4$, $\cdots$, $100$.
 Figure \ref{fig:tgv-pinn-loss} shows the histories of the optimization loss and the $L_2$ errors at $t=0$ and $t=40$ of the $u$ velocity on the left vertical axis.
+The reader should not confuse these two different metrics: whereas the prediction accuracy (measured by the $L_2$ errors) is the primary concern, the optimization loss is only a proxy for the accuracy.
+The optimization loss is a combination of the PDE losses and the initial and boundary condition losses, and it depends on how one optimizes the neural network parameters.
 \begin{figure}
     \centering%
     \includegraphics[width=\columnwidth]{tgv-2d-re100/pinn-nl3-nn128-npts8192-convergence}%
     \caption{%
         Histories with respect to optimization iterations for the total loss and the $L_2$ errors of $u$ at $t=0$ and $40$ in the TGV verification of the unsteady PINN solver.
-        The left vertical axis corresponds to the total loss and the errors.
-        The right vertical axis corresponds to the run time.
+        On the left vertical axis is the magnitude of the total loss and the errors.
+        (Note that loss is merely a proxy for the accuracy, whereas the error measures it directly.)
+        On the right vertical axis is the run time.
         The cyclical scheduler has a slightly better accuracy at $t=40$ with a slightly more time cost, though its total loss is higher.
     }
     \label{fig:tgv-pinn-loss}%
