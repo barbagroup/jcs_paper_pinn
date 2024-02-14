@@ -21,7 +21,13 @@ We used the following 2D TGV configuration, wih $Re=\num{100}$, to verify both t
 \end{equation}
 where $\nu=\num{0.01}$ and $\rho=\num{1}$ are the kinematic viscosity and the density, respectively.
 The spatial and temporal domains are $x, y \in \left[-\pi, \pi\right]$ and $t \in [0, 100]$.
-Periodic conditions are applied at all boundaries.
+
+Periodic conditions are applied at all boundaries by modifying the inputs of the neural network $G$: $x$ and $y$ are periodic at $-\pi$ and $\pi$, so instead of using $G=G(x, y, t)$, we modified the neural network $G$ to
+\begin{equation}\label{eq:periodic-bc}
+    G = G(\sin(x), \cos(x), \sin(y), \cos(y), t)
+\end{equation}
+This approach builds the periodicity into the model directly, and hence no boundary losses are needed.
+In general, says, if $x$ is periodic at $x_1$ adn $x_2$, to build the periodicity in to the neural networks, one can change the inputs to neural networks of $\sin({2\pi\frac{x-x_1}{x_2-x_1}})$ and $\cos({2\pi\frac{x-x_1}{x_2-x_1}})$.
 
 In PetIBM, we used the Adams-Bashforth and the Crank-Nicolson schemes for the temporal discretization of convection and diffusion terms, respectively.
 The spatial discretization is central difference for all terms.
