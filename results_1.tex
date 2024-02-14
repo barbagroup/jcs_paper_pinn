@@ -108,6 +108,9 @@ A total of \num{8192} points were used in each iteration for these losses as wel
 
 We used one NVIDIA V100 GPU to run the unsteady PINN solver for the TGV problem.
 Note that the PINN solver used single-precision floats, which is the default in PyTorch.
+Note that PyTorch also works with double-precision floats.
+However, our main interest is whether PINNs can exhibit vortex shedding, rather than the numeric accuracy.
+Hence, to save computational resources, we argue that single precision is sufficient for this purpose.
 
 After training, we evaluated the PINN solver's errors at cell centers in a $512$ $\times$ $512$ Cartesian grid and at $t=0$, $2$, $4$, $\cdots$, $100$.
 Figure \ref{fig:tgv-pinn-loss} shows the histories of the optimization loss and the $L_2$ errors at $t=0$ and $t=40$ of the $u$ velocity on the left vertical axis.
