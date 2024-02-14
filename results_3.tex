@@ -13,7 +13,7 @@ The PetIBM simulation was done with a grid resolution of $1485$ $\times$ $720$ a
 The hardware used and the configurations of the linear solvers were the same as described in section \ref{sec:val_2d_cylinder_re40}.
 
 As for the PINN solvers, in addition to the steady and unsteady solvers, a third PINN solver was used: a data-driven PINN.
-In this case, the PINN solver receives data from a PetIBM simulation that includes fully developed vortex shedding, with the aim of testing the ability of PINN to keep generating vortices.
+In this case, the PINN solver receives data from a PetIBM simulation that includes fully developed vortex shedding, with the aim of testing the ability of PINN to keep generating vortices by following the dynamics only in time ranges that do not have observation data.
 The data-driven PINN solver is the same as the unsteady PINN solver but replaces the three initial condition losses ($L_4$ to $L_6$) with:
 
 \begin{equation}\label{eq:data-driven-loss}
@@ -46,7 +46,7 @@ However, it is not uncommon to see a steady-state flow solver used for unsteady 
 The MLP network used on all PINN solvers has 6 hidden layers and 512 neurons per layer.
 The configurations of spatial-temporal points are the same as those in section \ref{sec:val_2d_cylinder_re40}.
 The Adam optimizer is also the same, except that now we ran for \num{1000000} optimization iterations.
-The parameters of the cyclical learning rate scheduler are now: $\eta_{low}=\num{1e-6}$, $\eta_{high}=\num{1e-2}$, $N_c=5000$, and $\gamma=\num{0.9999915}$.
+The parameters of the cyclical learning rate scheduler are now: $\eta_{low}=10^{-6}$, $\eta_{high}=0.01$, $N_c=5000$, and $\gamma=0.9999915$.
 The hardware used was one NVIDIA A100 GPU for all PINN runs.
 
 \subsection{Results}\label{sec:cylinder-re200-results}
