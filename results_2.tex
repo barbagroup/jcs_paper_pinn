@@ -32,14 +32,14 @@ The workflow of the steady PINN solver works similar to that in figure \ref{fig:
 
 Both PINN solvers used MLP networks with \num{6} hidden layers and \num{512} neurons each.
 The Adam optimizer configuration is the same as that in section \ref{sec:verification}.
-The learning rate scheduler is a cyclical learning rate with $\eta_{low}=\num{e-6}$, $\eta_{high}=\num{e-2}$, $N_c=\num{5000}$, and $\gamma={9.9998e-1}$.
+The learning rate scheduler is a cyclical learning rate with $\eta_{low}=\num{e-6}$, $\eta_{high}=\num{e-2}$, $N_c=\num{5000}$, and $\gamma={0.99998}$.
 We ran all PINN-related validations with one NVIDIA A100 GPU,
 all using single-precision floats.
 
-To evaluate PDE losses, \num{256000000} spatial-temporal points were randomly sampled from the computational domain and the desired simulation time range.
-The PDE losses were evaluated on \num{25600} points in each iteration, so the Adam optimizer would see each point \num{40} times on average during the \num{400000}-iteration optimization.
-On the boundaries, \num{25600000} points were sampled  at $y=\pm 10$, and \num{12800000} at $x=-10$ and $x=30$.
-On the cylinder surface, the number of spatial-temporal points were \num{5120000}.
+To evaluate PDE losses, \num{256e6} spatial-temporal points were randomly sampled from the computational domain and the desired simulation time range.
+The PDE losses were evaluated on \num{256e2} points in each iteration, so the Adam optimizer would see each point \num{40} times on average during the optimization with \num{4e5} iterations.
+On the boundaries, \num{256e5} points were sampled  at $y=\pm 10$, and \num{128e5} at $x=-10$ and $x=30$.
+On the cylinder surface, the number of spatial-temporal points were \num{512e4}.
 In each iteration, \num{2560}, \num{1280}, and \num{512} points were used, respectively.
 
 Figure \ref{fig:cylinder-re40-pinn-loss} shows the training history of the PINN solvers.

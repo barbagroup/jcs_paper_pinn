@@ -76,14 +76,14 @@ So while we configured the absolute tolerance to be \num{e-14}, the final precon
 On the other hand, the velocity systems were solved to the desired tolerance.
 With this minor caveat, we consider the verification of PetIBM to be successful, as the minor issue in the convergence of pressure is irrelevant to the code implementation in PetIBM.
 
-Next, we solved this same TGV problem using an unsteady PINN solver.
+Next, we solved this same TGV problem using an unsteady PINN solver---a PINN having $t$ as one of its inputs and trained against extra loss terms for initial conditions ($L_4$ to $L_6$ in figure \ref{fig:pinn-workflow}).
 For the optimization, we used PyTorch's Adam optimizer
 with the following parameters: $\beta_1=\num{0.9}$, $\beta_2=\num{0.999}$, and $\epsilon=\num{e-8}$.
-The total iteration number in the optimization is \num{400000}.
+The total iteration number in the optimization is \num{4e5}.
 Two learning-rate schedulers were tested: the exponential learning rate and the cyclical learning rate.
 Both learning rates are from PyTorch and were used merely to satisfy our curiosity.
 The exponential scheduler has only one parameter in PyTorch: $\gamma=0.95^{\frac{1}{5000}}$.
-The cyclical scheduler has the following parameters: $\eta_{low}=\num{1.5e-5}$, $\eta_{high}=\num{1.5e-3}$, $N_c=\num{5000}$, and $\gamma=\num{9.99989e-1}$.
+The cyclical scheduler has the following parameters: $\eta_{low}=\num{1.5e-5}$, $\eta_{high}=\num{1.5e-3}$, $N_c=\num{5000}$, and $\gamma=0.999989$.
 These values were chosen so that the peak learning rate at each cycle is slightly higher than the exponential rates.
 Figure \ref{fig:tgv-learning-rate-hist} shows a comparison of the two schedulers.
 
