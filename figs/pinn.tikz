@@ -36,64 +36,69 @@
 	\node [below=0.5 of nout2, input] (nout3) {$p$};
 
 	% network's outer frame
-	\node [draw=black!50, fit={(network) (nin2) (nh15) (nh25) (nout2)}] (nnframe){};
+	\node [draw=black, line width=0.01in, fit={(network) (nin2) (nh15) (nh25) (nout2)}] (nnframe){};
+
+	% denoting automatic derivation
+	\node [right=0.5 of nnframe.north east, anchor=north west, none] (adtxt) {
+		Automatic Differentiation
+	};
 
 	% u derivative nodes
-	\node [above right=1.6 and 0.8 of nout1.north east, anchor=south west, input] (dudt) {
-		$\frac{\partial u}{\partial t}$};
-	\node [right=0.1 of dudt.east, anchor=west, input] (dudx) {
-		$\frac{\partial u}{\partial x}$};
-	\node [right=0.1 of dudx.east, anchor=west, input] (dudy) {
+	\node [below=0.4 of adtxt.south, anchor=north, input] (dudy) {
 		$\frac{\partial u}{\partial y}$};
 	\node [right=0.1 of dudy.east, anchor=west, input] (d2udx2) {
 		$\frac{\partial^2 u}{\partial x^2}$};
 	\node [right=0.1 of d2udx2.east, anchor=west, input] (d2udy2) {
 		$\frac{\partial^2 u}{\partial y^2}$};
+	\node [left=0.1 of dudy.west, anchor=east, input] (dudx) {
+		$\frac{\partial u}{\partial x}$};
+	\node [left=0.1 of dudx.west, anchor=east, input] (dudt) {
+		$\frac{\partial u}{\partial t}$};
 
 	% u derivatives' outer frame
 	\node [draw=black!50, fit={(dudt) (d2udy2)}] (dubox) {};
 
 	% v derivative nodes
-	\node [below right=1.2 and 0.8 of nout3.south east, anchor=north west, input] (dvdt) {
-		$\frac{\partial v}{\partial t}$};
-	\node [right=0.1 of dvdt.east, anchor=west, input] (dvdx) {
-		$\frac{\partial v}{\partial x}$};
-	\node [right=0.1 of dvdx.east, anchor=west, input] (dvdy) {
+	\node [below=0.4 of dudy.south, anchor=north, input] (dvdy) {
 		$\frac{\partial v}{\partial y}$};
 	\node [right=0.1 of dvdy.east, anchor=west, input] (d2vdx2) {
 		$\frac{\partial^2 v}{\partial x^2}$};
 	\node [right=0.1 of d2vdx2.east, anchor=west, input] (d2vdy2) {
 		$\frac{\partial^2 v}{\partial y^2}$};
+	\node [left=0.1 of dvdy.west, anchor=east, input] (dvdx) {
+		$\frac{\partial v}{\partial x}$};
+	\node [left=0.1 of dvdx.west, anchor=east, input] (dvdt) {
+		$\frac{\partial v}{\partial t}$};
 
 	% v derivatives' outer frame
 	\node [draw=black!50, fit={(dvdt) (d2vdy2)}] (dvbox) {};
 
 	% p derivative nodes
-	\node [above=0.5 of dvdt.north west, anchor=south west, input] (dpdx) {
+	\node [below=0.4 of dvdx.south east, anchor=north, input] (dpdx) {
 		$\frac{\partial p}{\partial x}$};
-	\node [right=0.1 of dpdx.east, anchor=west, input] (dpdy) {
+	\node [below=0.4 of d2vdx2.south west, anchor=north, input] (dpdy) {
 		$\frac{\partial p}{\partial y}$};
 
 	% p derivatives' outer frame
 	\node [draw=black!50, fit={(dpdx) (dpdy)}] (dpbox) {};
 
 	% all derivatives' outer frame
-	\node [draw=black!50, fit={(dubox) (dvbox)}] (dervbox) {};
+	\node [draw=black, line width=0.01in, fit={(dubox) (dpbox)}] (dervbox) {};
 
 	% loss 5: IC of v (rendered first bc it's at the center)
-	\node [right=4.75 of nnframe.east, anchor=south west, input] (loss5) {$
+	\node [right=6.5 of nnframe.east, anchor=south west, none] (loss5) {$
 		L_5 = v - v_0
 		\text{\enspace if } t = 0
 	$};
 
 	% loss 4: IC of u
-	\node [above=0.2 of loss5.north west, anchor=south west, input] (loss4) {$
+	\node [above=0.2 of loss5.north west, anchor=south west, none] (loss4) {$
 		L_4 = u - u_0
 		\text{\enspace if } t = 0
 	$};
 
 	% loss 3: momentum y
-	\node [above=0.2 of loss4.north west, anchor=south west, input] (loss3) {$
+	\node [above=0.4 of loss4.north, anchor=south, none] (loss3) {$
 		L_3 = 
 			\frac{\partial v}{\partial t} +
 			\vec{u} \cdot \nabla v +
@@ -103,7 +108,7 @@
 	$};
 
 	% loss 2: momentum x
-	\node [above=0.2 of loss3.north west, anchor=south west, input] (loss2) {$
+	\node [above=0.2 of loss3.north west, anchor=south west, none] (loss2) {$
 		L_2 = 
 			\frac{\partial u}{\partial t} +
 			\vec{u} \cdot \nabla u +
@@ -113,46 +118,58 @@
 	$};
 
 	% loss 1: continuity
-	\node [above=0.2 of loss2.north west, anchor=south west, input] (loss1) {$
+	\node [above=0.2 of loss2.north west, anchor=south west, none] (loss1) {$
 		L_1 = \nabla \cdot \vec{u} \text{\enspace if } \vec{x} \in {\Omega}
 	$};
 
 	% loss 6: IC of p
-	\node [below=0.2 of loss5.south west, anchor=north west, input] (loss6) {$
+	\node [below=0.2 of loss5.south west, anchor=north west, none] (loss6) {$
 		L_6 = p - p_0
 		\text{\enspace if } t = 0
 	$};
 
 	% loss 7: dirichlet bc of u
-	\node [below=0.2 of loss6.south west, anchor=north west, input] (loss7) {$
+	\node [below=0.4 of loss6.south, anchor=north, none] (loss7) {$
 		L_7 = u - u_D \text{\enspace if } \vec{x}\in\Gamma_{\displaystyle u_D}
 	$};
 
 	% loss 8: dirichlet bc of v
-	\node [below=0.2 of loss7.south west, anchor=north west, input] (loss8) {$
+	\node [below=0.2 of loss7.south west, anchor=north west, none] (loss8) {$
 		L_8 = v - v_D \text{\enspace if } \vec{x}\in\Gamma_{\displaystyle v_D}
 	$};
 
 	% loss 9: neumann bc of u
-	\node [below=0.2 of loss8.south west, anchor=north west, input] (loss9) {$
+	\node [below=0.4 of loss8.south, anchor=north, none] (loss9) {$
 		L_9 = \frac{\partial u}{\partial \vec{n}} - u_N
 		\text{\enspace if } \vec{x}\in\Gamma_{\displaystyle u_N}
 	$};
 
 	% loss 10: neumann bc of v
-	\node [below=0.2 of loss9.south west, anchor=north west, input] (loss10) {$
+	\node [below=0.2 of loss9.south west, anchor=north west, none] (loss10) {$
 		L_{10} = \frac{\partial v}{\partial \vec{n}} - v_N
 		\text{\enspace if } \vec{x}\in\Gamma_{\displaystyle v_N}
 	$};
 
+	% PDE residuals' outer frame
+	\node [draw=black!50, fit={(loss1) (loss2) (loss3)}] (pdelossbox){};
+
+	% IC's outer frame
+	\node [draw=black!50, fit={(loss4) (loss5) (loss6)}] (iclossbox){};
+
+	% Dirichlet BCs' outer frame
+	\node [draw=black!50, fit={(loss7) (loss8)}] (dbclossbox){};
+
+	% Neumann BCs' outer frame
+	\node [draw=black!50, fit={(loss9) (loss10)}] (nbclossbox){};
+
 	% losses' outer frame
-	\node [draw=black!50, fit={(loss1) (loss2) (loss3) (loss10)}] (lossframe){};
+	\node [draw=black, line width=0.01in, fit={(pdelossbox) (iclossbox) (dbclossbox) (nbclossbox)}] (lossframe){};
 
 	% arg min
 	\node [right=0.5 of lossframe.east, anchor=west, input] (argmin) {$
 		\argmin\limits_{\theta \in \Theta}
 		\sum\limits_{\substack{\vec{x} \in \Omega \cup \Gamma \\ t \in T}}
-		\sum\limits_{j=1}^{10} L_j^2
+		\sum\limits_{j=1}^{10} c_j L_j^2
 	$};
 	\node [above=0.1 of argmin.north, anchor=south, none] (argmintxt) {Optimizing/training};
 
@@ -178,59 +195,17 @@
 	\draw [style=one arrow] (nh25) to (nout2);
 	\draw [style=one arrow] (nh25) to (nout3);
 
-	% link network's outputs to derivatives
-	\draw [style=one arrow] (nout1.east) to (dubox.west);
-	\draw [style=one arrow] (nout2.east) to (dvbox.west);
-	\draw [style=one arrow] (nout3.east) to (dpbox.west);
+	% link network to derivatives
+	\draw [style=one arrow] (nnframe.east) to (dervbox.west);
 
-	% links to continuity loss
-	\draw [style=one arrow] (dubox.east) to (loss1.west);
-	\draw [style=one arrow] (dvbox.east) to (loss1.west);
+	% link network to loss
+	\draw [style=one arrow] (nnframe.east) to [out=270,in=250] (lossframe.west);
 
-	% links to x momemtum loss
-	\draw [style=one arrow] (nout1.east) to (loss2.west);
-	\draw [style=one arrow] (nout2.east) to (loss2.west);
-	\draw [style=one arrow] (dubox.east) to (loss2.west);
-	\draw [style=one arrow] (dvbox.east) to (loss2.west);
-	\draw [style=one arrow] (dpbox.east) to (loss2.west);
-
-	% links to y momemtum loss
-	\draw [style=one arrow] (nout1.east) to (loss3.west);
-	\draw [style=one arrow] (nout2.east) to (loss3.west);
-	\draw [style=one arrow] (dubox.east) to (loss3.west);
-	\draw [style=one arrow] (dvbox.east) to (loss3.west);
-	\draw [style=one arrow] (dpbox.east) to (loss3.west);
-
-	% links to u IC
-	\draw[style=one arrow] (nout1.east) to (loss4.west);
-
-	% links to v IC
-	\draw[style=one arrow] (nout2.east) to (loss5.west);
-
-	% links to p IC
-	\draw[style=one arrow] (nout3.east) to (loss6.west);
-
-	% links to u velocity Dirichlet BC
-	\draw [style=one arrow] (nout1.east) to (loss7.west);
-
-	% links to v velocity Dirichlet BC
-	\draw [style=one arrow] (nout2.east) to (loss8.west);
-
-	% links to u velocity Neumann BC
-	\draw [style=one arrow] (dubox.east) to (loss9.west);
-
-	% links to v velocity Neumann BC
-	\draw [style=one arrow] (dvbox.east) to (loss10.west);
+	% link derivatives to loss
+	\draw [style=one arrow] (dervbox.east) to (lossframe.west);
 
 	% links from losses to argmin
 	\draw [style=one arrow] (lossframe.east) to (argmin.west);
-
-	% denoting automatic derivation
-	\node [above right=0.8 and 0.3 of nnframe.north, anchor=west, none] (adtxt) {
-		Automatic differentiation
-	};
-	\draw [-, draw=black!50] (nnframe.north) |- (adtxt.west);
-	\draw [-{Latex[length=4]}, draw=black!50] (adtxt.east) -| (dervbox.north);
 
 \end{tikzpicture}
 % vim:ft=tex:
