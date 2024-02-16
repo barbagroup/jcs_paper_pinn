@@ -30,7 +30,8 @@ Note that in incompressible flow pressure is a Lagrangian multiplier to enforce 
         Given spatial-temporal coordinates $(x, y, t)$, the neural network returns an approximate solution $(u, v, p)$ at this coordinate.
         We then apply automatic differentiation to obtain required derivatives.
         With the approximate solutions and the derivatives, we are able to calculate the residuals (also called losses, denoted by symbol $L$) between the approximates and PDEs, as well as the initial and boundary conditions. 
-        Using the aggregated squared losses, we can determine the free model parameters $\theta$ by a least-square method.
+        Finally, with the weighted sum of squared losses, we can determine the free model parameters $\theta$ by a least-square method.
+        Note that the weights of the squared losses in this work are all $1$.
     }
     \label{fig:pinn-workflow}
 \end{figure*}
