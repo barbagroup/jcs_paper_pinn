@@ -11,14 +11,14 @@ Additionally, the data-driven PINN showed limited extrapolation capabilities and
 Our Koopman analysis suggests that PINN methods may be dissipative and dispersive, which inhibits oscillation and causes the computed flow to return to a steady state.
 This analysis is also consistent with the observation of a spectral bias inherent in neural networks \cite{rahaman_spectral_2019}.
 
-For forward problems, data-free PINNs require more theoretical and mathematical refinement to compete with traditional numerical methods in terms of accuracy and computational cost, making data-driven PINNs more attractive due to their capabilities in handling applications that are challenging for traditional methods, such as flow reconstruction or surrogate modeling with sparse data.
+For forward problems, data-free PINNs will need more theoretical and mathematical refinement to compete with traditional numerical methods in terms of accuracy and computational cost, making data-driven PINNs more promising due to their capabilities in handling applications that are challenging for traditional methods, such as flow reconstruction or surrogate modeling with sparse data.
 Thus, an interesting research question arises: how do data-driven PINNs compare to classical deep learning approaches, where neural networks are not constrained by partial differential equations?
-Both data-driven PINNs and classical deep learning approaches perform well for interpolation problems but struggle with extrapolation beyond the training data.
-In situations where only sparse data are available, data-driven PINNs still function while classical deep learning may not.
-However, data-driven PINNs are also more expensive to train and require significantly more computational resources due to the inclusion of high-order derivatives in the loss function.
-It is therefore important to understand the cost-performance ratio of data-driven PINNs when deployed in real-world applications.
-One immediately obvious factor affecting this ratio between data-driven PINNs and classical deep learning is the ease of obtaining additional training data.
+Both data-driven PINNs and classical deep learning approaches work well for interpolation settings but struggle with extrapolation beyond the training data.
+In situations where only sparse data are available, data-driven PINNs still work while classical deep learning may not.
+However, data-driven PINNs are also more expensive to train and require significantly more computational resources due to the presence of high-order derivatives in the loss function.
+It is therefore important to assess the cost-performance ratio of data-driven PINNs when deployed in real-world applications.
+One obvious factor affecting this ratio in data-driven PINNs and classical deep learning is the ease of obtaining additional training data.
 For example, if training data are obtained from traditional numerical simulations, meaning that high-quality data can be acquired abundantly, then classical deep learning may be a cheaper option than data-driven PINNs.
-Thus, it would be valuable to quantitatively compare the benefits of data-driven PINNs to classical deep learning and understand the associated cost-performance trade-offs.
+Thus, it would be valuable to quantitatively assess the benefits of data-driven PINNs compared to classical deep learning and understand the associated cost-performance trade-offs.
 
 % vim:ft=tex
