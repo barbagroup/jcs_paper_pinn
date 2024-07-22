@@ -71,4 +71,12 @@ It shares with PINNs the features of solving a gradient-based optimization probl
 But it does not suffer from the performance penalty of PINNs, showing an advantage of several orders of magnitude in terms of wall-clock time.
 Given that this approach uses a completely different loss function, it supports the claims of other researchers that the loss-function landscape is the source of problems for PINNs.
 
+In this work, we analized data-free PINNs' failure in predicting vortex shedding using dynamic mode analysis, which is a technique based on the physical and mathematical natures of the problem.
+Another direction to analyze data-free PINNs' failure is by an ablation study on data-driven PINNs, which is a machine-learning approach.
+An ablation study is a technique to investigate the functionality and importance of different components in a machine-learning model by removing components one by one from a working system.
+This being said, an ablation study on the interpolation part of the data-driven PINNs can potentially hint us on how vortex shedding is generated in PINNs.
+Such an ablation study, nevertheless, will take non-trivial time and resources to conduct, and is left for future work.
+Note that an ablation study requires a system that is working to some degree.
+It is therefor not proper to apply ablation study with the data-free PINNs and the extrapolation region of the data-driven PINNs as they have not been shown to work yet.
+
 % vim:ft=tex
