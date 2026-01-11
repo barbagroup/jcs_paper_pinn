@@ -1,0 +1,60 @@
+name: LaTeX Diff
+
+on:
+  workflow_dispatch:
+    inputs:
+      compare_with:
+        description: 'Tag or commit to compare with (leave empty for latest tag)'
+        required: false
+        default: ''
+
+jobs:
+  latexdiff: 
+    runs-on: ubuntu-latest
+    
+    steps: 
+    - name: Checkout code
+      uses: actions/checkout@v5
+      with:
+        fetch-depth: 0
+    
+    - name: Get comparison reference
+      id: ref
+      run: |
+        if [ -n "${{ github.event.inputs.compare_with }}" ]; then
+          REF="${{ github.event.inputs.compare_with }}"
+        else
+          REF=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+        fi
+        echo "ref=$REF" >> $GITHUB_OUTPUT
+        echo "Comparing with: $REF"
+    
+    - name: Install LaTeX and latexdiff
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          texlive-latex-base \
+          texlive-latex-extra \
+          texlive-publishers \
+          texlive-science \
+          texlive-fonts-recommended \
+          latexdiff
+    
+    - name: Run latexdiff
+      if: steps.ref.outputs.ref != ''
+      run: |
+        TEX_FILE="main.tex"
+        git show ${{ steps.ref.outputs.ref }}:$TEX_FILE > old.tex
+        latexdiff old.tex $TEX_FILE > diff.tex
+        
+    - name: Compile diff PDF
+      if: steps.ref.outputs.ref != ''
+      run: |
+        pdflatex diff.tex
+        
+    - name: Upload diff PDF as artifact
+      if: steps.ref.outputs.ref != ''
+      uses: actions/upload-artifact@v4
+      with: 
+        name: latexdiff-output
+        path: diff.pdf
