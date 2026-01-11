@@ -4,7 +4,7 @@
 
 Manuscript repository, including all source files for the text and figures.
 
-arXiv preprint: Coming soon
+arXiv preprint: [v1: 31 May 2023](https://arxiv.org/abs/2306.00230)
 
 ## Reproducibility package archives
 
