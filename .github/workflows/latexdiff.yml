@@ -1,0 +1,68 @@
+name: LaTeX Diff
+
+on:
+  workflow_dispatch:
+    inputs:
+      compare_with:
+        description: 'Tag or commit to compare with (leave empty for latest tag)'
+        required: false
+        default: ''
+
+jobs:
+  latexdiff: 
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps: 
+    - name: Checkout code
+      uses: actions/checkout@v5
+      with:
+        fetch-depth: 0
+    
+    - name: Get comparison reference
+      id: ref
+      run: |
+        if [ -n "${{ github.event.inputs.compare_with }}" ]; then
+          REF="${{ github.event.inputs.compare_with }}"
+        else
+          REF=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -z "$REF" ]; then
+            echo "::error::No tags found. Provide a tag/commit via the compare_with input."
+            exit 1
+          fi
+        fi
+        echo "ref=$REF" >> $GITHUB_OUTPUT
+        echo "Comparing with: $REF"
+    
+    - name: Install LaTeX and latexdiff
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          texlive-latex-base \
+          texlive-latex-extra \
+          texlive-publishers \
+          texlive-science \
+          texlive-fonts-recommended \
+          latexdiff
+    
+    - name: Run latexdiff
+      if: steps.ref.outputs.ref != ''
+      run: |
+        TEX_FILE="main.tex"
+        OLD_DIR="$(mktemp -d)"
+        trap 'rm -rf "$OLD_DIR"' EXIT
+        git archive "${{ steps.ref.outputs.ref }}" | tar -x -C "$OLD_DIR"
+        latexdiff --flatten "$OLD_DIR/$TEX_FILE" "$TEX_FILE" > diff.tex
+        
+    - name: Compile diff PDF
+      if: steps.ref.outputs.ref != ''
+      run: |
+        pdflatex diff.tex
+        
+    - name: Upload diff PDF as artifact
+      if: steps.ref.outputs.ref != ''
+      uses: actions/upload-artifact@v4
+      with: 
+        name: latexdiff-output
+        path: diff.pdf
