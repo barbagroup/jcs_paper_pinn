@@ -27,6 +27,10 @@ jobs:
           REF="${{ github.event.inputs.compare_with }}"
         else
           REF=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -z "$REF" ]; then
+            echo "::error::No tags found. Provide a tag/commit via the compare_with input."
+            exit 1
+          fi
         fi
         echo "ref=$REF" >> $GITHUB_OUTPUT
         echo "Comparing with: $REF"
