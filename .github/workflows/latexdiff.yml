@@ -46,8 +46,10 @@ jobs:
       if: steps.ref.outputs.ref != ''
       run: |
         TEX_FILE="main.tex"
-        git show ${{ steps.ref.outputs.ref }}:$TEX_FILE > old.tex
-        latexdiff --flatten old.tex $TEX_FILE > diff.tex
+        OLD_DIR="$(mktemp -d)"
+        trap 'rm -rf "$OLD_DIR"' EXIT
+        git archive "${{ steps.ref.outputs.ref }}" | tar -x -C "$OLD_DIR"
+        latexdiff --flatten "$OLD_DIR/$TEX_FILE" "$TEX_FILE" > diff.tex
         
     - name: Compile diff PDF
       if: steps.ref.outputs.ref != ''
