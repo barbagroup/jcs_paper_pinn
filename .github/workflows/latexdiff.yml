@@ -47,7 +47,7 @@ jobs:
       run: |
         TEX_FILE="main.tex"
         git show ${{ steps.ref.outputs.ref }}:$TEX_FILE > old.tex
-        latexdiff old.tex $TEX_FILE > diff.tex
+        latexdiff --flatten old.tex $TEX_FILE > diff.tex
         
     - name: Compile diff PDF
       if: steps.ref.outputs.ref != ''
