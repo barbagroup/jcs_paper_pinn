@@ -6,15 +6,19 @@ Those results give confidence that the solvers are correctly solving the Navier-
 \subsection{Case configurations}
 
 The computational domain is $[-8$, $25]$ $\times$ $[-8$, $8]$ for $x$ and $y$, and $t\in[0$, $200]$.
-Other boundary conditions, initial conditions, and density were the same as those in section \ref{sec:val_2d_cylinder_re40}.
+The initial conditions and density were the same as those in section \ref{sec:val_2d_cylinder_re40}, as were the inlet, lateral, and cylinder-surface boundary conditions.
 The non-dimensional kinematic viscosity is set to $0.005$ to make the Reynolds number $200$.
 
 The PetIBM simulation was done with a grid resolution of $1485$ $\times$ $720$ and $\Delta t = \num{5e-3}$.
+PetIBM retained the convective outlet conditions described in section \ref{sec:val_2d_cylinder_re40}.
 The hardware used and the configurations of the linear solvers were the same as described in section \ref{sec:val_2d_cylinder_re40}.
 
-As for the PINN solvers, in addition to the steady and unsteady solvers, a third PINN solver was used: a data-driven PINN.
-In this case, the PINN solver receives data from a PetIBM simulation that includes fully developed vortex shedding, with the aim of testing the ability of PINN to keep generating vortices by following the dynamics only in time ranges that do not have observation data.
-The data-driven PINN solver is the same as the unsteady PINN solver but replaces the three initial condition losses ($L_4$ to $L_6$) with:
+For $Re=200$, we used three PINN solvers: steady and unsteady data-free PINNs, trained without observation data, and a data-driven PINN trained with observations from PetIBM.
+For the data-free PINNs, we imposed zero pressure at the outlet without explicit velocity boundary constraints.
+This choice was intended to reduce potential interference from the outlet velocity constraints with vortex shedding.
+
+The data-driven PINN receives data from a PetIBM simulation that includes fully developed vortex shedding, with the aim of testing whether the PINN can sustain vortex shedding beyond the time range covered by observation data.
+The data-driven PINN replaces the three initial-condition losses ($L_4$ to $L_6$) with observation losses for $u$, $v$, and $p$:
 
 \begin{equation}\label{eq:data-driven-loss}
     \left\{
@@ -31,21 +35,23 @@ The data-driven PINN solver is the same as the unsteady PINN solver but replaces
     \end{array}
 \end{equation}
 where the subscript $data$ denotes data from a PetIBM simulation.
-$T_{data}$ denotes the time range for which PetIBM simulation data is fed to the data-driven PINN solver.
-In the range $T_{data} \equiv \left[125, 140\right]$ the flow has achieved fully developed vortex shedding, and the data-driven PINN solver should keep generating vortices.
-The PetIBM simulation outputted transient snapshots every 1 second in simulation time, hence the data fed to the data-driven PINN solver consisted of 16 snapshots.
+$T_{data}$ comprises sixteen integer times from $125$ through $140$, with PetIBM snapshots providing $u$, $v$, and $p$ observations.
+In this time range the flow has achieved fully developed vortex shedding, and the data-driven PINN solver was expected to sustain vortex shedding.
 These snapshots contain around $3$ full periods of vortex shedding.
-The total number of spatial-temporal points in these snapshots is around $\num{17000000}$, and we only used $\num{6400}$ every iteration, meaning each data batch was repeated approximately every $\num{2650}$ iterations.
-Except for replacing the IC losses with a data-driven approach, all other loss terms and the code in the data-driven PINN solver remain the same as the unsteady PINN solver.
+PDE and boundary residuals are evaluated over $t\in[125,200]$.
+The data-driven PINN imposed no explicit outlet constraint.
 
-Note that for the data-driven PINN solver, the PDE and boundary condition losses were evaluated only in $t\in[125$, $200]$ because we treated the PetIBM snapshots as if they were initial conditions.
-Another note is the use of steady PINN solver.
-The $Re=200$ cylinder flow is not expected to have a steady-state solution.
-However, it is not uncommon to see a steady-state flow solver used for unsteady flows for engineering purposes, especially two or three decades ago when computing power was much more restricted.
+We also included a steady PINN solver.
+The $Re=200$ cylinder flow is expected to exhibit vortex shedding, whose time-dependent behavior cannot be resolved by a steady-state solver.
+However, it is not uncommon to see a steady-state flow solver used for unsteady flows for engineering purposes.
 
 The MLP network used on all PINN solvers has 6 hidden layers and 512 neurons per layer.
-The configurations of spatial-temporal points are the same as those in section \ref{sec:val_2d_cylinder_re40}.
-The Adam optimizer is also the same, except that now we ran for \num{1000000} optimization iterations.
+All three $Re=200$ PINNs use \num{6400} points per training batch for PDE residuals and \num{640} for each boundary constraint.
+Initial-condition or observation losses, where applicable, use \num{6400} points per field per iteration.
+Each field's observation dataset contains approximately 17 million points, traversed in shuffled batches and reused throughout training.
+The PDE, boundary, and initial-condition points are sampled into fixed pools of \num{1000} batches and reused throughout training.
+The Adam optimizer parameters are the same as those in section \ref{sec:val_2d_cylinder_re40}.
+Training comprised one million Adam iterations.
 The parameters of the cyclical learning rate scheduler are now: $\eta_{low}=10^{-6}$, $\eta_{high}=0.01$, $N_c=5000$, and $\gamma=0.9999915$.
 The hardware used was one NVIDIA A100 GPU for all PINN runs.
 
@@ -66,14 +72,15 @@ Figure \ref{fig:cylinder-re200-pinn-loss} shows the aggregated loss convergence 
 It shows both the losses and the run times of the three PINN solvers.
 As seen in section \ref{sec:val_2d_cylinder_re40}, the unsteady PINN solver converges to a higher total loss than the steady PINN solver does.
 Also, the data-driven PINN solver converges to an even higher total loss.
-However, it is unclear at this point if having a higher loss means a higher prediction error in data-driven PINN because we replaced the initial condition losses with 16 snapshots from PetIBM and only ran the data-driven PINN solver for $t\in[125, 200]$.
+However, a higher total loss does not necessarily mean a higher prediction error in the data-driven PINN: its loss uses observations from 16 PetIBM snapshots in place of initial conditions, omits the outlet-pressure constraint, and covers a different temporal domain, $t\in[125, 200]$.
 
 Figure \ref{fig:cylinder-re200-drag-lift} shows the drag and lift coefficients versus simulation time.
 \begin{figure}[t]
     \centering%
     \includegraphics[width=0.95\columnwidth]{cylinder-2d-re200/drag-lift-coeffs}%
     \caption{%
-        Drag and lift coefficients of 2D cylinder flow at $Re=\num{200}$ w/ PINNs
+        Drag and lift coefficients of 2D cylinder flow at $Re=\num{200}$ w/ PINNs.
+        PINN results use the saved checkpoints with the lowest training loss.
     }
     \label{fig:cylinder-re200-drag-lift}%
 \end{figure}
@@ -129,6 +136,7 @@ We also present the flow contours from the steady PINN in figure \ref{fig:cylind
     \includegraphics[width=0.95\textwidth]{cylinder-2d-re200/contour-comparison-u}%
     \caption{%
         $u$-velocity comparison of 2D cylinder flow of $Re=\num{200}$ between PetIBM, unsteady PINN, and data-driven PINN. Figure under CC-BY \cite{chuang_barba_2023_fig12}.
+        PINN results use the saved checkpoints with the lowest training loss.
     }
     \label{fig:cylinder-re200-pinn-contours-u}%
 \end{figure*}
@@ -138,6 +146,7 @@ We also present the flow contours from the steady PINN in figure \ref{fig:cylind
     \includegraphics[width=0.95\textwidth]{cylinder-2d-re200/contour-comparison-v}%
     \caption{%
         $v$-velocity comparison of 2D cylinder flow of $Re=\num{200}$ between PetIBM, unsteady PINN, and data-driven PINN.
+        PINN results use the saved checkpoints with the lowest training loss.
     }
     \label{fig:cylinder-re200-pinn-contours-v}%
 \end{figure*}
@@ -147,6 +156,7 @@ We also present the flow contours from the steady PINN in figure \ref{fig:cylind
     \includegraphics[width=0.95\textwidth]{cylinder-2d-re200/contour-comparison-p}%
     \caption{%
         Pressure comparison of 2D cylinder flow of $Re=\num{200}$ between PetIBM, unsteady PINN, and data-driven PINN.
+        PINN results use the saved checkpoints with the lowest training loss.
     }
     \label{fig:cylinder-re200-pinn-contours-p}%
 \end{figure*}
@@ -156,6 +166,7 @@ We also present the flow contours from the steady PINN in figure \ref{fig:cylind
     \includegraphics[width=0.95\textwidth]{cylinder-2d-re200/contour-comparison-omega_z}%
     \caption{%
         Vorticity ($\omega_z$) comparison of 2D cylinder flow of $Re=\num{200}$ between PetIBM, unsteady PINN, and data-driven PINN.
+        PINN results use the saved checkpoints with the lowest training loss.
     }
     \label{fig:cylinder-re200-pinn-contours-omega_z}%
 \end{figure*}
@@ -165,6 +176,7 @@ We also present the flow contours from the steady PINN in figure \ref{fig:cylind
     \includegraphics[width=0.95\columnwidth]{cylinder-2d-re200/contour-comparison-steady}%
     \caption{%
         Contours of 2D cylinder flow at $Re=\num{200}$ w/ steady PINN.
+        PINN results use the saved checkpoints with the lowest training loss.
     }
     \label{fig:cylinder-re200-steady-pinn-contours}%
 \end{figure}
@@ -192,6 +204,7 @@ Figure \ref{fig:cylinder-re200-pinn-vort-gen} shows the vorticity from PetIBM an
     \includegraphics[width=\columnwidth]{cylinder-2d-re200/vorticity_z}%
     \caption{%
         Vorticity generation near the cylinder for 2D cylinder flow of $Re=\num{200}$ at $t=140$, $141$, $142$, and $142.5$ w/ data-driven PINNs.
+        PINN results use the final checkpoint.
     }
     \label{fig:cylinder-re200-pinn-vort-gen}%
 \end{figure}
@@ -219,6 +232,7 @@ Next, we examined the Q-criterion in the same vicinity of the cylinder in $t\in[
     \includegraphics[width=\columnwidth]{cylinder-2d-re200/qcriterion}%
     \caption{%
         Q-criterion generation near the cylinder for 2D cylinder flow of $Re=\num{200}$ at $t=140$, $141$, $142$, and $142.5$ w/ data-driven PINNs.
+        PINN results use the final checkpoint.
     }
     \label{fig:cylinder-re200-pinn-qcriterion}%
 \end{figure}
@@ -263,6 +277,7 @@ Figure \ref{fig:cylinder-re200-koopman-eig-dist} shows the distributions of the 
     \includegraphics[width=\columnwidth]{cylinder-2d-re200/koopman_eigenvalues_complex}%
     \caption{%
         Distribution of the Koopman eigenvalues on the complex plane for 2D cylinder flow at $Re=\num{200}$ obtained with PetIBM and with data-driven PINN. Figure under CC-BY \cite{chuang_barba_2023_fig19}.
+        PINN results use the saved checkpoints with the lowest training loss.
     }
     \label{fig:cylinder-re200-koopman-eig-dist}%
 \end{figure}
@@ -319,6 +334,7 @@ Figure \ref{fig:cylinder-re200-koopman-mode-strength} shows mode strengths versu
     \caption{%
         Mode strengths versus mode frequencies for 2D cylinder flow at $Re=\num{200}$.
         Note that we use a log scale for the vertical axis.
+        PINN results use the saved checkpoints with the lowest training loss.
     }
     \label{fig:cylinder-re200-koopman-mode-strength}%
 \end{figure}

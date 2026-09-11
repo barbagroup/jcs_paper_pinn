@@ -13,7 +13,7 @@ None of these combinations altered the findings and conclusions presented in thi
 
 Two-dimensional Taylor-Green vortices with periodic boundary conditions have closed-form analytical solutions,
 and serve as standard verification cases for CFD solvers.
-We used the following 2D TGV configuration, wih $Re=\num{100}$, to verify both the PINN solvers and PetIBM:
+We used the following 2D TGV configuration, with $Re=\num{100}$, to verify both the PINN solvers and PetIBM:
 \begin{equation}\label{eq:tgv}
     \left\{
         \begin{aligned}
@@ -31,7 +31,7 @@ Periodic conditions are applied at all boundaries by modifying the inputs of the
     G = G(\sin(x), \cos(x), \sin(y), \cos(y), t)
 \end{equation}
 This approach builds the periodicity into the model directly, and hence no boundary losses are needed.
-In general, says, if $x$ is periodic at $x_1$ adn $x_2$, to build the periodicity in to the neural networks, one can change the inputs to neural networks of $\sin({2\pi\frac{x-x_1}{x_2-x_1}})$ and $\cos({2\pi\frac{x-x_1}{x_2-x_1}})$.
+For $x$ periodic at $x_1$ and $x_2$, replacing the input $x$ with $\sin({2\pi\frac{x-x_1}{x_2-x_1}})$ and $\cos({2\pi\frac{x-x_1}{x_2-x_1}})$ imposes periodicity.
 
 In PetIBM, we used the Adams-Bashforth and the Crank-Nicolson schemes for the temporal discretization of convection and diffusion terms, respectively.
 The spatial discretization is central difference for all terms.
@@ -87,7 +87,7 @@ The total iteration number in the optimization is \num{4e5}.
 Two learning-rate schedulers were tested: the exponential learning rate and the cyclical learning rate.
 Both learning rates are from PyTorch and were used merely to satisfy our curiosity.
 The exponential scheduler has only one parameter in PyTorch: $\gamma=0.95^{\frac{1}{5000}}$.
-The cyclical scheduler has the following parameters: $\eta_{low}=\num{1.5e-5}$, $\eta_{high}=\num{1.5e-3}$, $N_c=\num{5000}$, and $\gamma=0.999989$.
+The cyclical scheduler has the following parameters: $\eta_{low}=\num{1.5e-5}$, $\eta_{high}=\num{1.5e-3}$, $N_c=\num{5000}$ (half-cycle length), and $\gamma=0.999989$.
 These values were chosen so that the peak learning rate at each cycle is slightly higher than the exponential rates.
 Figure \ref{fig:tgv-learning-rate-hist} shows a comparison of the two schedulers.
 
@@ -101,14 +101,16 @@ Figure \ref{fig:tgv-learning-rate-hist} shows a comparison of the two schedulers
     \label{fig:tgv-learning-rate-hist}%
 \end{figure}
 
-The MLP network used consisted of \num{3} hidden layers and \num{128} neurons per layer.
-\num{8192e4} spatial-temporal points were used to evaluate the PDE losses (i.e., the $L_1$, $L_2$, and $L_3$ in figure \ref{fig:pinn-workflow}).
-We randomly sampled these spatial-temporal points from the spatial-temporal domain$\left[-\pi, \pi\right] \times \left[-\pi, \pi\right] \times \left(0, 100\right]$.
-During each optimization iteration, however, we only used \num{8192} points to evaluate the PDE losses.
-It means the optimizer sees each point \num{40} times on average because we have a total of \num{4e5} iterations.
-Similarly, \num{8192e4} spatial-temporal points were sampled from $x,y \in \left[-\pi, \pi\right] ] \times \left[-\pi, \pi\right]$ and $t=0$ for the initial condition loss (i.e., $L_4$ to $L_6$).
-And the same number of points were sampled from each domain boundary ($x=\pm\pi$ and $y=\pm\pi$) and $t\in\left(0, 100\right]$ for boundary-condition losses ($L_7$ to $L_{10}$).
-A total of \num{8192} points were used in each iteration for these losses as well.
+We present two MLP network configurations for the Taylor-Green vortex selected from our previous work~\cite{chuang_thesis_2023}.
+The training-history comparison in figure \ref{fig:tgv-pinn-loss} uses three hidden layers with \num{128} neurons per layer and batches of \num{8192} points for both learning-rate schedules.
+The contours at $t=40$ in figure \ref{fig:tgv-pinn-contours} use three hidden layers with \num{256} neurons per layer and batches of \num{4096} points, trained with the exponential learning-rate schedule.
+
+Each configuration uses separate fixed pools for the PDE-residual ($L_1$ to $L_3$ in figure \ref{fig:pinn-workflow}) and initial-condition ($L_4$ to $L_6$) constraints.
+Each pool contains \num{10000} batches: \num{81920000} points for the first configuration and \num{40960000} for the second.
+The PDE-residual points are sampled from $[-\pi,\pi]\times[-\pi,\pi]\times(0,100]$, and the initial-condition points from $[-\pi,\pi]\times[-\pi,\pi]$ at $t=0$.
+Each training iteration uses one batch from each pool.
+Each run comprises \num{400000} iterations, or \num{40} passes through each pool.
+Periodicity is imposed through the network inputs, so no boundary-condition points are sampled.
 
 We used one NVIDIA V100 GPU to run the unsteady PINN solver for the TGV problem.
 Note that the PINN solver used single-precision floats, which is the default in PyTorch.
@@ -119,12 +121,13 @@ Hence, to save computational resources, we argue that single precision is suffic
 After training, we evaluated the PINN solver's errors at cell centers in a $512$ $\times$ $512$ Cartesian grid and at $t=0$, $2$, $4$, $\cdots$, $100$.
 Figure \ref{fig:tgv-pinn-loss} shows the histories of the optimization loss and the $L_2$ errors at $t=0$ and $t=40$ of the $u$ velocity on the left vertical axis.
 The reader should not confuse these two different metrics: whereas the prediction accuracy (measured by the $L_2$ errors) is the primary concern, the optimization loss is only a proxy for the accuracy.
-The optimization loss is a combination of the PDE losses and the initial and boundary condition losses, and it depends on how one optimizes the neural network parameters.
+The optimization loss is a combination of the PDE-residual and initial-condition losses, and it depends on how one optimizes the neural network parameters.
 \begin{figure}
     \centering%
     \includegraphics[width=\columnwidth]{tgv-2d-re100/pinn-nl3-nn128-npts8192-convergence}%
     \caption{%
         Histories with respect to optimization iterations for the total loss and the $L_2$ errors of $u$ at $t=0$ and $40$ in the TGV verification of the unsteady PINN solver.
+        Both learning-rate schedules use three hidden layers with \num{128} neurons per layer and batches of \num{8192} points.
         On the left vertical axis is the magnitude of the total loss and the errors.
         (Note that loss is merely a proxy for the accuracy, whereas the error measures it directly.)
         On the right vertical axis is the run time.
@@ -135,13 +138,12 @@ The optimization loss is a combination of the PDE losses and the initial and bou
 The same figure also shows the run time (wall time) on the right vertical axis.
 The total loss converges to an order of magnitude of \num{e-6}, which may reflect the fact that PyTorch uses single-precision floats.
 The errors at $t=0$ and $t=40$ converge to the orders of \num{e-4} and \num{e-2}, respectively.
-This observation is reasonable because the net errors over the whole temporal domain is, by definition, similar to the square root of the total, which is \num{e-3}.
 The PINN solver got exact initial conditions for training (i.e., $L_4$ to $L_6$), so it is reasonable to see a better prediction accuracy at $t=0$ than later times.
-Finally, though the computational performance is not the focus of this paper, for the interested reader's benefit we would like to point out that the PINN solver took about 6 hours to converge with a V100 GPU, while PetIBM needed less than 10 seconds to get an error level of \num{e-2} using a very dated K40 GPU (and most of the time was overhead to initialize the solver).
+Finally, though the computational performance is not the focus of this paper, for the interested reader's benefit we would like to point out that the training-history configuration in figure \ref{fig:tgv-pinn-loss} took about 6 hours to converge with a V100 GPU, while PetIBM needed less than 10 seconds to get an error level of \num{e-2} using a very dated K40 GPU (and most of the time was overhead to initialize the solver).
 
 In sum, we determined the PINN solution to be verified, although the accuracy and the computational cost were not satisfying.
 The relatively low accuracy is likely a consequence of the use of single-precision floats and the intrinsic properties of PINNs, rather than implementation errors.
-Figure \ref{fig:tgv-pinn-contours} shows the contours of the PINN solver's predictions at $t=40$ for reference.
+Figure \ref{fig:tgv-pinn-contours} shows predictions at $t=40$ from the second configuration, with three hidden layers of \num{256} neurons and batches of \num{4096} points.
 For more details about this verification exercise, we refer readers to our conference proceedings paper \cite{chuang_experience_2022}.
 
 \begin{figure}[t]
@@ -149,7 +151,8 @@ For more details about this verification exercise, we refer readers to our confe
     \includegraphics[width=0.95\columnwidth]{tgv-2d-re100/pinn-nl3-nn256-npts4096-contours.png}
     \caption{%
         Contours at $t=40$ of 2D TGV at $Re=\num{100}$ primitive variables and errors using the unsteady PINN solver.
-        Roughly speaking, the absolute errors are at the level of \num{e-3} for primitive variables ($u$, $v$, and $p$), which corresponds to the square root of the total loss.
+        The network has three hidden layers with \num{256} neurons per layer and uses batches of \num{4096} points with the exponential learning-rate scheduler.
+        Roughly speaking, the absolute errors are at the level of \num{e-3} for primitive variables ($u$, $v$, and $p$).
         The vorticity was obtained from post-processing and hence was augmented in terms of errors.
     }
     \label{fig:tgv-pinn-contours}%
