@@ -65,7 +65,8 @@ $\mat{A}^k$ and $\vec{b}^k$ for $0 \le k \le \ell$ are parameter matrices and ve
 $\theta = \left\{ \mat{A}^0, \vec{b}^0, \cdots, \mat{A}^\ell, \vec{b}^\ell\right\}$.
 Finally, $\sigma_k$ for $0 \le k \le \ell$ are vector-valued functions, called activation functions, that are applied element-wise to the vectors $\vec{h}^k$.
 In neural networks, the activation functions are responsible for providing the non-linearity in an MLP model.
-Throughout this work, we use $\sigma_0 = \cdots = \sigma_\ell = \sigma(\vec{z}) = \frac{\vec{z}}{1 + \exp(\vec{z})}$, the classical sigmoid function.
+All hidden layers use the element-wise sigmoid linear unit (SiLU) activation: $\sigma_k(z)=z/(1+\exp(-z))$ for $0 \leq k < \ell$.
+The output layer uses the identity activation, $\sigma_\ell(z)=z$, so the predicted velocity and pressure are affine functions of the final hidden-layer outputs.
 The parameters $\ell$, $N_k$, and the choices of $\sigma_k$ together control the model complexity of the PINNs that use MLP networks.
 
 As with all other numerical methods for PDEs, the calculations of spatial and temporal derivatives of velocity and pressure play a crucial role.
